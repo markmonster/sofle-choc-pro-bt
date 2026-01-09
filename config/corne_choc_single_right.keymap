@@ -49,7 +49,7 @@
         };
 
         extra_layer_1 {
-            display-name = "EXTRA 1";
+            display-name = "EXTRA";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
