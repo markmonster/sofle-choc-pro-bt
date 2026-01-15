@@ -155,19 +155,19 @@
         compatible = "zmk,combos";
 
         sum_12 {
-            bindings = <&kp KP_N3>;
+            bindings = <&kp NUMBER_3>;
             key-positions = <8 9>;
             layers = <2>;
         };
 
         sum_13 {
-            bindings = <&kp KP_NUMBER_4>;
+            bindings = <&kp N4>;
             key-positions = <10 8>;
             layers = <2>;
         };
 
         sum_14 {
-            bindings = <&kp KP_N5>;
+            bindings = <&kp N5>;
             key-positions = <11 8>;
             layers = <2>;
         };
@@ -179,37 +179,37 @@
         };
 
         sum_24 {
-            bindings = <&kp KP_N6>;
+            bindings = <&kp N6>;
             key-positions = <9 11>;
             layers = <2>;
         };
 
         sum_34 {
-            bindings = <&kp KP_N7>;
+            bindings = <&kp N7>;
             key-positions = <11 10>;
             layers = <2>;
         };
 
         sum_123 {
-            bindings = <&kp KP_N6>;
+            bindings = <&kp N6>;
             key-positions = <8 9 10>;
             layers = <2>;
         };
 
         sum_124 {
-            bindings = <&kp KP_N7>;
+            bindings = <&kp N7>;
             key-positions = <10 8 11>;
             layers = <2>;
         };
 
         sum_234 {
-            bindings = <&kp KP_NUMBER_9>;
+            bindings = <&kp N9>;
             key-positions = <10 11 9>;
             layers = <2>;
         };
 
         sum_1234 {
-            bindings = <&kp KP_N0>;
+            bindings = <&kp N0>;
             key-positions = <10 11 9 8>;
             layers = <2>;
         };
