@@ -233,10 +233,10 @@
         lower_layer {
             display-name = "QUERTY L";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &mt GLOBE C_VOL_UP         &kp Q   &kp W         &kp E         &kp R  &kp T  &dmt_ctrl_hash_amp
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &mt LEFT_COMMAND C_VOL_DN  &kp A   &kp S         &kp D         &kp F  &kp G  &dmt_alt_excl_quest
-&trans  &trans  &trans  &trans  &trans  &trans                                     &kp Z   &kp X         &kp C         &kp V  &kp B  &dmt_shift_parentheses
-                        &trans  &trans  &trans                                     &trans  &bt BT_SEL 0  &bt BT_SEL 1
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &mt GLOBE C_VOL_UP         &kp Q   &kp W       &kp E       &kp R  &kp T  &dmt_ctrl_hash_amp
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &mt LEFT_COMMAND C_VOL_DN  &kp A   &kp S       &kp D       &kp F  &kp G  &dmt_alt_excl_quest
+&trans  &trans  &trans  &trans  &trans  &trans                                     &kp Z   &kp X       &kp C       &kp V  &kp B  &dmt_shift_parentheses
+                        &trans  &trans  &trans                                     &trans  &kp C_PREV  &kp C_NEXT
             >;
         };
 
