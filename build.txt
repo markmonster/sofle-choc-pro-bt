@@ -1,0 +1,7 @@
+# Build
+west build --force -b "corne_choc_pro_right" -S "studio-rpc-usb-uart" -- -DZMK_CONFIG=/workspaces/zmk-config/config -DSHIELD="nice_view" -DCONFIG_ZMK_STUDIO=y
+west build --force -b "corne_choc_pro_left" -S "studio-rpc-usb-uart" -- -DZMK_CONFIG=/workspaces/zmk-config/config -DSHIELD="nice_view" -DCONFIG_ZMK_STUDIO=y
+
+# Settings Reset
+west build --force -b "corne_choc_pro_right" -S "studio-rpc-usb-uart" -- -DZMK_CONFIG=/workspaces/zmk-config/config -DSHIELD="settings_reset" -DCONFIG_ZMK_STUDIO=y
+west build --force -b "corne_choc_pro_left" -S "studio-rpc-usb-uart" -- -DZMK_CONFIG=/workspaces/zmk-config/config -DSHIELD="settings_reset" -DCONFIG_ZMK_STUDIO=y
