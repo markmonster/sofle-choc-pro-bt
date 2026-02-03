@@ -1,0 +1,9 @@
+boards:
+  - name: corne_choc_pro_left
+    vendor: nithinskurien
+    socs:
+      - name: nrf52840
+  - name: corne_choc_pro_right
+    vendor: nithinskurien
+    socs:
+      - name: nrf52840
