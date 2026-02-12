@@ -30,7 +30,8 @@
         fullscreen: fullscreen {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LEFT_WIN &kp UP>;
+            bindings = <&kp LEFT_WIN>, <&kp UP>;
+
             label = "FULLSCREEN";
         };
     };
