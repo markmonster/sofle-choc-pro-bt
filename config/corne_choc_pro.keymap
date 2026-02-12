@@ -28,8 +28,8 @@
             //                    | GUI | LWR | SPC |               | ENT | RSE  | ALT |
 
             bindings = <
-&lt 3 ESCAPE          &kp Q  &kp W  &kp E         &kp R  &kp T      &kp ESCAPE  &kp BACKSPACE  &kp Y      &kp U  &kp I          &kp O    &kp P     &lt 5 LBKT
-&mt LEFT_CONTROL TAB  &kp A  &kp S  &kp D         &kp F  &kp G      &kp ENTER   &kp ENTER      &kp H      &kp J  &kp K          &kp L    &kp SEMI  &mt RCTRL SINGLE_QUOTE
+&kp TAB               &kp Q  &kp W  &kp E         &kp R  &kp T      &kp ESCAPE  &kp BACKSPACE  &kp Y      &kp U  &kp I          &kp O    &kp P     &kp LBKT
+&mt LEFT_CONTROL TAB  &kp A  &kp S  &kp D         &kp F  &kp G      &kp ENTER   &kp ENTER      &kp H      &kp J  &kp K          &kp L    &kp SEMI  &kp SINGLE_QUOTE
 &mt LEFT_SHIFT RBKT   &kp Z  &kp X  &kp C         &kp V  &kp B                                 &kp N      &kp M  &kp COMMA      &kp DOT  &kp FSLH  &mt RIGHT_SHIFT BACKSLASH
                                     &kp LEFT_ALT  &mo 1  &kp SPACE                             &kp SPACE  &mo 2  &kp RIGHT_ALT
             >;
@@ -48,7 +48,7 @@
 &trans  &none  &kp HOME  &kp UP    &kp END    &kp PG_UP  &trans  &trans  &kp EQUAL         &kp LS(NUMBER_7)  &kp LS(NUMBER_8)  &kp LS(NUMBER_9)  &kp KP_DIVIDE    &kp KP_MULTIPLY
 &trans  &none  &kp LEFT  &kp DOWN  &kp RIGHT  &kp PG_DN  &trans  &trans  &kp V             &kp LS(NUMBER_4)  &kp LS(NUMBER_5)  &kp LS(NUMBER_6)  &kp KP_SUBTRACT  &kp KP_PLUS
 &trans  &none  &none     &none     &none      &none                      &kp LS(NUMBER_0)  &kp LS(NUMBER_1)  &kp LS(NUMBER_2)  &kp LS(NUMBER_3)  &kp N4           &kp N5
-                         &trans    &trans     &trans                     &trans            &trans            &trans
+                         &trans    &trans     &trans                     &trans            &mo 3             &trans
             >;
         };
 
@@ -62,10 +62,10 @@
             //                    | GUI |     | SPC |               | ENT |     | ALT |
 
             bindings = <
-&kp SPACE  &kp LS(TILDE)  &kp G       &kp V         &kp RA(NUMBER_4)  &kp LS(PLUS)  &trans  &trans  &kp N6  &kp GRAVE       &kp UP_ARROW    &kp END          &none  &none
-&kp EQUAL  &kp N6         &kp LA(N2)  &kp LA(N3)    &kp NUMBER_4      &kp NUMBER_5  &trans  &trans  &none   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none  &none
-&kp SPACE  &trans         &kp C       &kp NUMBER_9  &kp RA(X)         &kp RA(C)                     &none   &kp NUMBER_1    &kp NUMBER_2    &kp NUMBER_3     &none  &none
-                                      &trans        &trans            &trans                        &trans  &trans          &trans
+&kp SPACE  &kp LS(TILDE)  &kp G       &kp V         &kp RA(NUMBER_4)  &kp LS(PLUS)  &trans  &trans  &kp F1   &kp F2   &kp F3    &kp F4  &kp F5  &none
+&kp EQUAL  &kp N6         &kp LA(N2)  &kp LA(N3)    &kp NUMBER_4      &kp NUMBER_5  &trans  &trans  &kp F6   &kp F7   &kp F8    &kp F9  &none   &none
+&kp SPACE  &trans         &kp C       &kp NUMBER_9  &kp RA(X)         &kp RA(C)                     &kp F11  &kp F12  &kp LGUI  &none   &none   &none
+                                      &trans        &mo 5             &trans                        &trans   &trans   &trans
             >;
         };
 
