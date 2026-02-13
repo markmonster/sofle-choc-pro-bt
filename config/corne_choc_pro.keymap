@@ -24,15 +24,6 @@
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
-
-        gui_hold: gui_hold {
-            compatible = "zmk,behavior-hold-tap";
-            label = "GUI_HOLD";
-            bindings = <&lm_gui>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
     };
 
     combos {
