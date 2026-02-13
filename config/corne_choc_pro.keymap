@@ -77,7 +77,7 @@
             //                    | GUI | LWR | SPC |               | ENT | RSE  | ALT |
 
             bindings = <
-&kp ESCAPE            &kp Q  &kp W  &kp E         &kp R            &kp T      &lm_gui    &kp BACKSPACE  &kp Y      &kp U            &kp I          &kp O    &kp P     &kp LBKT
+&kp ESCAPE            &kp Q  &kp W  &kp E         &kp R            &kp T      &kp LGUI   &kp BACKSPACE  &kp Y      &kp U            &kp I          &kp O    &kp P     &kp LBKT
 &mt LEFT_CONTROL TAB  &kp A  &kp S  &kp D         &kp F            &kp G      &kp ENTER  &kp ENTER      &kp H      &kp J            &kp K          &kp L    &kp SEMI  &kp SINGLE_QUOTE
 &mt LEFT_SHIFT RBKT   &kp Z  &kp X  &kp C         &kp V            &kp B                                &kp N      &kp M            &kp COMMA      &kp DOT  &kp FSLH  &mt RIGHT_SHIFT BACKSLASH
                                     &kp LEFT_ALT  &quicklayer 2 2  &kp SPACE                            &kp SPACE  &quicklayer 1 1  &kp RIGHT_ALT
@@ -111,27 +111,27 @@
             //                    | GUI |     | SPC |               | ENT |     | ALT |
 
             bindings = <
-&kp ESC        &kp INS     &kp HOME  &kp UP    &kp END    &kp PG_UP     &trans  &trans  &kp F1         &kp F2           &kp F3  &kp F4  &kp F5   &none
-&kp TAB        &none       &kp LEFT  &kp DOWN  &kp RIGHT  &kp PG_DN     &trans  &trans  &kp F6         &kp F7           &kp F8  &kp F9  &kp F10  &none
-&kp BACKSPACE  &kp DELETE  &none     &none     &none      &none                         &kp F11        &kp F12          &none   &none   &none    &none
-                                     &trans    &to 0      &kp LEFT_WIN                  &kp RIGHT_WIN  &quicklayer 3 3  &trans
+&trans  &kp INS        &kp HOME    &kp UP    &kp END    &kp PG_UP     &trans  &trans  &kp F1         &kp F2           &kp F3  &kp F4  &kp F5   &none
+&trans  &none          &kp LEFT    &kp DOWN  &kp RIGHT  &kp PG_DN     &trans  &trans  &kp F6         &kp F7           &kp F8  &kp F9  &kp F10  &none
+&trans  &kp BACKSPACE  &kp DELETE  &none     &none      &none                         &kp F11        &kp F12          &none   &none   &none    &none
+                                   &trans    &to 0      &kp LEFT_WIN                  &kp RIGHT_WIN  &quicklayer 3 3  &trans
             >;
         };
 
         mouse {
             display-name = "mouse";
             bindings = <
-&kp ESCAPE  &kp F11  &mkp MB5   &none      &mkp MB4   &kp HOME  &trans  &trans  &msc SCRL_UP    &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &none   &trans
-&kp TAB     &none    &mkp RCLK  &mkp MCLK  &mkp LCLK  &kp END   &trans  &trans  &msc SCRL_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none   &trans
-&none       &none    &none      &none      &none      &kp ESC                   &none           &msc SCRL_LEFT  &trans          &msc SCRL_RIGHT  &trans  &trans
-                                &trans     &mo 2      &trans                    &trans          &to 0           &trans
+&trans  &kp F11  &mkp MB5   &none      &mkp MB4   &kp HOME  &trans  &trans  &msc SCRL_UP    &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &none   &trans
+&trans  &none    &mkp RCLK  &mkp MCLK  &mkp LCLK  &kp END   &trans  &trans  &msc SCRL_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none   &trans
+&trans  &none    &none      &none      &none      &kp ESC                   &none           &msc SCRL_LEFT  &trans          &msc SCRL_RIGHT  &trans  &trans
+                            &trans     &mo 2      &trans                    &trans          &to 0           &trans
             >;
         };
 
         system {
             display-name = "system";
             bindings = <
-&rgb_ug RGB_EFR  &rgb_ug RGB_EFF  &none  &none   &bt BT_SEL 4  &bt BT_SEL 1  &to 0   &to 0   &msc SCRL_UP    &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &none   &trans
+&rgb_ug RGB_EFR  &rgb_ug RGB_EFF  &none  &none   &bt BT_SEL 4  &bt BT_SEL 1  &trans  &trans  &msc SCRL_UP    &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &none   &trans
 &rgb_ug RGB_SPD  &rgb_ug RGB_SPI  &none  &none   &bt BT_SEL 3  &bt BT_SEL 0  &trans  &trans  &msc SCRL_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none   &trans
 &rgb_ug RGB_TOG  &rgb_ug RGB_TOG  &none  &none   &bt BT_SEL 2  &bt BT_CLR                    &none           &msc SCRL_LEFT  &trans          &msc SCRL_RIGHT  &trans  &trans
                                          &trans  &to 0         &trans                        &trans          &to 0           &trans
