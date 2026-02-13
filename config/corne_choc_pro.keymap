@@ -113,7 +113,7 @@
             bindings = <
 &trans  &kp INS        &kp HOME    &kp UP    &kp END    &kp PG_UP     &trans  &trans  &kp F1         &kp F2           &kp F3  &kp F4  &kp F5   &none
 &trans  &none          &kp LEFT    &kp DOWN  &kp RIGHT  &kp PG_DN     &trans  &trans  &kp F6         &kp F7           &kp F8  &kp F9  &kp F10  &none
-&trans  &kp BACKSPACE  &kp DELETE  &none     &none      &none                         &kp F11        &kp F12          &none   &none   &none    &none
+&trans  &kp BACKSPACE  &kp DELETE  &none     &none      &kp LGUI                      &kp F11        &kp F12          &none   &none   &none    &none
                                    &trans    &to 0      &kp LEFT_WIN                  &kp RIGHT_WIN  &quicklayer 3 3  &trans
             >;
         };
