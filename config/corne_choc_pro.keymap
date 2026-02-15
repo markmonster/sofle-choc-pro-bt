@@ -65,8 +65,8 @@
         };
 
         layer-mouse {
-            bindings = <&to 3>;
-            key-positions = <34 35>;
+            bindings = <&tog 3>;
+            key-positions = <22 23>;
         };
     };
 
