@@ -71,7 +71,7 @@
 
         layer-mouse {
             bindings = <&tog 3>;
-            key-positions = <23 24>;
+            key-positions = <23 25>;
         };
     };
 
