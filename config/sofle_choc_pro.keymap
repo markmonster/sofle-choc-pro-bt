@@ -33,7 +33,7 @@
     rgb_base: rgb_base {
       compatible = "zmk,behavior-macro";
       #binding-cells = <0>;
-      bindings = <&rgb_ug RGB_COLOR_HSB(35, 20, 25)>; /* warm/neutral */
+      bindings = <&rgb_ug RGB_COLOR_HSB(35, 20, 20)>; /* warm/neutral */
     };
 
     /* LOWER: set color + momentary/toggle */
@@ -103,14 +103,14 @@
       >;
     };
 
-    /* --- Layer keys: hold = momentary, tap = toggle (and set RGB) ---------- */
+    /* --- Layer keys: hold = momentary, tap = toggle + set RGB ---------------- */
 
     lt_lower: lt_lower {
       compatible = "zmk,behavior-hold-tap";
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "balanced";
-      bindings = <&lower_mo_rgb &lower_tog_rgb>;  /* hold, tap */
+      bindings = <&mo &lower_tog_rgb>;  /* hold, tap */
     };
 
     lt_raise: lt_raise {
@@ -118,7 +118,7 @@
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "balanced";
-      bindings = <&raise_mo_rgb &raise_tog_rgb>;  /* hold, tap */
+      bindings = <&mo &raise_tog_rgb>;  /* hold, tap */
     };
 
     /* --- Home Row Mods helper: tap = key, hold = modifier ------------------ */
@@ -148,7 +148,7 @@
       // Notes:
       // - A/S/D/F and J/K/L/; are Home Row Mods (tap letters, hold = modifiers).
       // - ESC is tap-dance: tap = ESC, double-tap = reset RGB to base color.
-      // - LOWER/RAISE are hold-tap: hold = momentary layer, tap = toggle layer (and set RGB color).
+      // - LOWER/RAISE are hold-tap: hold = momentary layer, tap = toggle layer + set RGB color.
 
       bindings = <
         &kp GRAVE  &kp N1  &kp N2    &kp N3    &kp N4     &kp N5                             &kp N6     &kp N7     &kp N8     &kp N9    &kp N0    &kp BSPC
