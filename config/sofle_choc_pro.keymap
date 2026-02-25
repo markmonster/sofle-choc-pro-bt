@@ -112,7 +112,7 @@
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "hold-preferred";
-      bindings = <&lhr_lower &lower_tog_rgb>;  /* hold, tap */
+      bindings = <&mo &lower_tog_rgb>;  /* hold, tap */
     };
 
     lt_raise: lt_raise {
@@ -120,7 +120,7 @@
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "hold-preferred";
-      bindings = <&lhr_raise &raise_tog_rgb>;  /* hold, tap */
+      bindings = <&mo &raise_tog_rgb>;  /* hold, tap */
     };
 
     /* --- Home Row Mods helper: tap = key, hold = modifier ------------------ */
