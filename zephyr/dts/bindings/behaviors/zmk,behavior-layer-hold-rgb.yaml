@@ -1,0 +1,36 @@
+description: Custom behavior for momentary layer hold with RGB color changes
+
+compatible: "zmk,behavior-layer-hold-rgb"
+
+include: one_param.yaml
+
+properties:
+  "#binding-cells":
+    const: 1
+
+  hold-hue:
+    type: int
+    required: true
+
+  hold-sat:
+    type: int
+    required: true
+
+  hold-bri:
+    type: int
+    required: true
+
+  base-hue:
+    type: int
+    required: true
+
+  base-sat:
+    type: int
+    required: true
+
+  base-bri:
+    type: int
+    required: true
+
+  locking:
+    type: boolean

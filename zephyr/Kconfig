@@ -1,0 +1,13 @@
+menu "Sofle Custom Behaviors"
+
+config ZMK_BEHAVIOR_LAYER_HOLD_RGB
+    bool "Layer hold RGB behavior"
+    depends on ZMK_KEYMAP
+    depends on ZMK_RGB_UNDERGLOW
+    default y
+    help
+      Custom behavior that sets underglow color and activates a momentary
+      layer on press, then deactivates the layer and restores base color
+      on release.
+
+endmenu

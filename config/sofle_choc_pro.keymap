@@ -36,14 +36,15 @@
       bindings = <&rgb_ug RGB_COLOR_HSB(35, 20, 20)>; /* warm/neutral */
     };
 
-    /* LOWER: set color + momentary/toggle */
-    lower_mo_rgb: lower_mo_rgb {
-      compatible = "zmk,behavior-macro";
-      #binding-cells = <0>;
-      bindings = <
-        &rgb_ug RGB_COLOR_HSB(210, 90, 35) /* blue */
-        &mo LOWER
-      >;
+    lhr_lower: lhr_lower {
+      compatible = "zmk,behavior-layer-hold-rgb";
+      #binding-cells = <1>;
+      hold-hue = <210>;
+      hold-sat = <90>;
+      hold-bri = <35>;
+      base-hue = <35>;
+      base-sat = <20>;
+      base-bri = <20>;
     };
 
     lower_tog_rgb: lower_tog_rgb {
@@ -64,14 +65,15 @@
       >;
     };
 
-    /* RAISE: set color + momentary/toggle */
-    raise_mo_rgb: raise_mo_rgb {
-      compatible = "zmk,behavior-macro";
-      #binding-cells = <0>;
-      bindings = <
-        &rgb_ug RGB_COLOR_HSB(285, 90, 35) /* purple */
-        &mo RAISE
-      >;
+    lhr_raise: lhr_raise {
+      compatible = "zmk,behavior-layer-hold-rgb";
+      #binding-cells = <1>;
+      hold-hue = <285>;
+      hold-sat = <90>;
+      hold-bri = <35>;
+      base-hue = <35>;
+      base-sat = <20>;
+      base-bri = <20>;
     };
 
     raise_tog_rgb: raise_tog_rgb {
@@ -110,7 +112,7 @@
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "balanced";
-      bindings = <&mo &lower_tog_rgb>;  /* hold, tap */
+      bindings = <&lhr_lower &lower_tog_rgb>;  /* hold, tap */
     };
 
     lt_raise: lt_raise {
@@ -118,7 +120,7 @@
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "balanced";
-      bindings = <&mo &raise_tog_rgb>;  /* hold, tap */
+      bindings = <&lhr_raise &raise_tog_rgb>;  /* hold, tap */
     };
 
     /* --- Home Row Mods helper: tap = key, hold = modifier ------------------ */
