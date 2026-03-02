@@ -1,0 +1,54 @@
+parse_config:
+  zmk_keycode_map:
+    LGUI: "WIN"
+    RGUI: "WIN"
+    LALT: "ALT"
+    RALT: "ALT"
+    LCTRL: "CTRL"
+    RCTRL: "CTRL"
+    LSHFT: "SHIFT"
+    RSHFT: "SHIFT"
+  modifier_fn_map:
+    left_ctrl: "CTRL"
+    right_ctrl: "CTRL"
+    left_shift: "SHIFT"
+    right_shift: "SHIFT"
+    left_gui: "WIN"
+    right_gui: "WIN"
+  raw_binding_map:
+    "&lower_tog_rgb": "TOGGLE LOWER"
+    "&raise_tog_rgb": "TOGGLE RAISE"
+    "&lower_off_rgb": "LOWER"
+    "&raise_off_rgb": "RAISE"
+  layer_legend_map:
+    default: "BASE"
+    lower: "LOWER"
+    raise: "RAISE"
+    adjust: "ADJUST"
+
+draw_config:
+  svg_extra_style: |
+    /* Render labels in uppercase for consistent legends */
+    text.key,
+    text.label,
+    text.combo,
+    text.hold,
+    text.shifted,
+    text.left,
+    text.right {
+      text-transform: uppercase;
+    }
+
+    /* Per-layer key background hues (normal keys only) */
+    .layer-default rect.key:not(.held) { fill: hsl(42 70% 96%); }
+    .layer-lower rect.key:not(.held)   { fill: hsl(210 75% 95%); }
+    .layer-raise rect.key:not(.held)   { fill: hsl(285 70% 95%); }
+    .layer-adjust rect.key:not(.held)  { fill: hsl(145 55% 94%); }
+
+    /* Make held/layer-activator keys white */
+    .layer-default rect.key.held,
+    .layer-lower rect.key.held,
+    .layer-raise rect.key.held,
+    .layer-adjust rect.key.held {
+      fill: #ffffff;
+    }

@@ -1,8 +1,22 @@
 name: Build ZMK firmware
 on: [push, pull_request, workflow_dispatch]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
     with:
       archive_name: firmware-${{ github.run_number }}
+
+  draw-keymaps:
+    uses: caksoylar/keymap-drawer/.github/workflows/draw-zmk.yml@main
+    with:
+      keymap_patterns: "config/*.keymap"
+      config_path: keymap-drawer/config.yaml
+      output_folder: keymap-drawer
+      install_branch: main
+      json_path: keymap-drawer/layouts
+      destination: artifact
+      artifact_name: keymap-drawer-${{ github.run_number }}

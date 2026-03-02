@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+ARG KEYMAP_DRAWER_VERSION=keymap-drawer
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN pip install --no-cache-dir "${KEYMAP_DRAWER_VERSION}"
+
+WORKDIR /work
+
+ENTRYPOINT ["keymap"]
+CMD ["--help"]
