@@ -18,6 +18,12 @@ Draw SVG:
 podman run --rm -v "${PWD}:/work" -w /work keymap-drawer-cli -c keymap-drawer/config.yaml draw keymap-drawer/sofle.yaml --dts-layout boards/arm/sofle_choc_pro/sofle_choc_pro-layouts.dtsi -o keymap-drawer/sofle.svg
 ```
 
+Draw only selected layers (optional), e.g. `lower` + `raise`:
+
+```powershell
+podman run --rm -v "${PWD}:/work" -w /work keymap-drawer-cli -c keymap-drawer/config.yaml draw keymap-drawer/sofle.yaml --dts-layout boards/arm/sofle_choc_pro/sofle_choc_pro-layouts.dtsi -s lower raise -o keymap-drawer/sofle-lower-raise.svg
+```
+
 Why the extra `--dts-layout` flag?
 
 - `sofle_choc_pro` is a custom ZMK board, so `keymap-drawer` cannot find it in its built-in keyboard list.
