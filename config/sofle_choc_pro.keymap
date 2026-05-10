@@ -257,7 +257,7 @@
         &trans      &trans         &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &trans   &trans   &trans
         &trans      &trans         &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &trans   &trans   &trans
         &trans      &trans         &trans   &trans   &trans   &trans   &trans   &trans      &trans   &trans   &trans   &trans   &trans   &trans
-        &code_off_rgb &trans        &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &trans
+        &trans        &trans        &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &code_off_rgb
       >;
     };
 
