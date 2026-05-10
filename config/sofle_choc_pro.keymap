@@ -107,6 +107,24 @@
       >;
     };
 
+    hrm_on_tog_rgb: hrm_on_tog_rgb {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings = <
+        &rgb_ug RGB_COLOR_HSB(140, 90, 35) /* green */
+        &tog HRM_ON
+      >;
+    };
+
+    hrm_on_off_rgb: hrm_on_off_rgb {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings = <
+        &tog HRM_ON
+        &rgb_ug RGB_OFF
+      >;
+    };
+
     /* --- Layer keys: hold = momentary, tap = toggle + set RGB ---------------- */
 
     lt_lower: lt_lower {
@@ -218,7 +236,7 @@
         &ext_power EP_TOG &rgb_ug RGB_HUD &rgb_ug RGB_HUI &rgb_ug RGB_SAD &rgb_ug RGB_SAI &rgb_ug RGB_EFF                         &none &none &none &none &none &none
         &none             &rgb_ug RGB_BRD &rgb_ug RGB_BRI &none           &none           &none                                   &none &none &none &none &none &none
         &none             &none           &none           &none           &none           &none            &rgb_ug RGB_TOG &none  &none &none &none &none &none &none
-        &tog HRM_ON       &none           &none           &lower_off_rgb  &none           &none                                   &raise_off_rgb &none &none &none
+        &hrm_on_tog_rgb   &none           &none           &lower_off_rgb  &none           &none                                   &raise_off_rgb &none &none &none
       >;
     };
 
@@ -242,7 +260,7 @@
     hrm_on_layer {
       display-name = "hrm-on";
       bindings = <
-        &trans   &trans   &trans   &trans   &trans   &trans                         &trans   &trans   &trans   &trans   &trans   &trans
+        &hrm_on_off_rgb &trans   &trans   &trans   &trans   &trans                         &trans   &trans   &trans   &trans   &trans   &trans
         &trans   &trans   &trans   &trans   &trans   &trans                         &trans   &trans   &trans   &trans   &trans   &trans
         &trans   &hrm LCTRL A    &hrm LALT S    &hrm LSHFT D    &hrm LGUI F    &trans   &trans               &hrm RGUI J    &hrm RSHFT K    &hrm RALT L    &hrm RCTRL SEMI    &trans
         &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans     &trans   &trans   &trans   &trans   &trans   &trans

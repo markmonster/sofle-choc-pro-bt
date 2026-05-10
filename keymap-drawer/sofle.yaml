@@ -234,7 +234,7 @@ layers:
   - ''
   - ''
   - ''
-  - {t: hrm-on, h: toggle}
+  - TOGGLE HRM
   - ''
   - ''
   - {t: LOWER, type: held}
@@ -306,7 +306,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   hrm-on:
-  - {t: ▽, type: trans}
+  - HRM
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}

@@ -22,12 +22,15 @@ parse_config:
     "&raise_off_rgb": "RAISE"
     "&code_tog_rgb": "TOGGLE CODE"
     "&code_off_rgb": "CODE"
+    "&hrm_on_tog_rgb": "TOGGLE HRM"
+    "&hrm_on_off_rgb": "HRM"
   layer_legend_map:
     default: "BASE"
     lower: "LOWER"
     raise: "RAISE"
     code: "CODE"
     adjust: "ADJUST"
+    hrm-on: "HRM"
 
 draw_config:
   svg_extra_style: |
@@ -48,12 +51,14 @@ draw_config:
     .layer-raise rect.key:not(.held)   { fill: hsl(285 70% 95%); }
     .layer-code rect.key:not(.held)    { fill: hsl(30 90% 92%); }
     .layer-adjust rect.key:not(.held)  { fill: hsl(145 55% 94%); }
+    .layer-hrm-on rect.key:not(.held)  { fill: hsl(140 55% 94%); }
 
     /* Make held/layer-activator keys white */
     .layer-default rect.key.held,
     .layer-lower rect.key.held,
     .layer-raise rect.key.held,
     .layer-code rect.key.held,
-    .layer-adjust rect.key.held {
+    .layer-adjust rect.key.held,
+    .layer-hrm-on rect.key.held {
       fill: #ffffff;
     }
