@@ -14,7 +14,8 @@
 #define LOWER 1
 #define RAISE 2
 #define ADJUST 3
-#define HRM_ON 4
+#define CODE 4
+#define HRM_ON 5
 
 / {
 
@@ -133,6 +134,7 @@
       // Notes:
       // - A/S/D/F and J/K/L/; are plain letters by default.
       // - HRM can be toggled on from the ADJUST layer.
+      // - CODE is a utility layer for code-focused shortcuts.
       // - ESC is a normal key.
       // - LOWER/RAISE are hold-tap: hold = momentary layer, tap = toggle layer + set RGB color.
 
@@ -141,7 +143,7 @@
         &kp ESC    &kp Q   &kp W     &kp E     &kp R      &kp T      &kp Y                    &kp U      &kp I      &kp O     &kp P     &kp BACKSLASH
         &kp TAB    &kp A  &kp S  &kp D  &kp F  &kp G  &kp H         &kp J  &kp K  &kp L  &kp SEMI  &kp SQT
         &kp LSHFT  &kp Z   &kp X     &kp C     &kp V      &kp B      &kp C_MUTE  &kp C_PLAY  &kp N      &kp M      &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
-                   &kp LGUI  &kp LALT  &kp LCTRL  &lt_lower LOWER LOWER  &kp RET     &kp SPACE   &lt_raise RAISE RAISE  &kp RCTRL  &kp RALT   &kp RGUI
+                   &kp LGUI  &kp LALT  &kp LCTRL  &lt_lower LOWER LOWER  &kp RET     &kp SPACE   &lt_raise RAISE RAISE  &kp RCTRL  &kp RALT   &tog CODE
       >;
 
       sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp C_PREV C_NEXT>;
@@ -199,6 +201,23 @@
         &none             &rgb_ug RGB_BRD &rgb_ug RGB_BRI &none           &none           &none                                   &none &none &none &none &none &none
         &none             &none           &none           &none           &none           &none            &rgb_ug RGB_TOG &none  &none &none &none &none &none &none
         &tog HRM_ON       &none           &none           &lower_off_rgb  &none           &none                                   &raise_off_rgb &none &none &none
+      >;
+    };
+
+    code_layer {
+      display-name = "code";
+      // ------------------------------------------------------------------------------------------------------------
+      // |        |        |        |        |        |        |                   |        |        |        |        |        |
+      // | CTRL+W | CTRL+SH+W |      |      |      |      |                   |        |        |        |        |        |
+      // |        |        |        |        |        |        |                   |        |        |        |        |        |
+      // |        |        |        |        |        |        |                   |        |        |        |        |        |
+      //               |        |        |        |        |        |  |        |        |        |        |
+      bindings = <
+        &kp LC(W)   &kp LC(LS(W))  &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &trans   &trans   &trans
+        &trans      &trans         &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &trans   &trans   &trans
+        &trans      &trans         &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &trans   &trans   &trans
+        &trans      &trans         &trans   &trans   &trans   &trans   &trans   &trans      &trans   &trans   &trans   &trans   &trans   &trans
+        &trans      &trans         &trans   &trans   &trans   &trans                        &trans   &trans   &trans   &trans
       >;
     };
 
