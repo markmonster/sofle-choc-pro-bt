@@ -24,6 +24,7 @@ parse_config:
     default: "BASE"
     lower: "LOWER"
     raise: "RAISE"
+    code: "CODE"
     adjust: "ADJUST"
 
 draw_config:
@@ -43,12 +44,14 @@ draw_config:
     .layer-default rect.key:not(.held) { fill: hsl(42 70% 96%); }
     .layer-lower rect.key:not(.held)   { fill: hsl(210 75% 95%); }
     .layer-raise rect.key:not(.held)   { fill: hsl(285 70% 95%); }
+    .layer-code rect.key:not(.held)    { fill: hsl(30 90% 92%); }
     .layer-adjust rect.key:not(.held)  { fill: hsl(145 55% 94%); }
 
     /* Make held/layer-activator keys white */
     .layer-default rect.key.held,
     .layer-lower rect.key.held,
     .layer-raise rect.key.held,
+    .layer-code rect.key.held,
     .layer-adjust rect.key.held {
       fill: #ffffff;
     }
