@@ -2,11 +2,12 @@ description: Custom behavior for momentary layer hold with RGB color changes
 
 compatible: "zmk,behavior-layer-hold-rgb"
 
-include: one_param.yaml
+include: zero_param.yaml
 
 properties:
-  "#binding-cells":
-    const: 1
+  layer:
+    type: int
+    required: true
 
   hold-hue:
     type: int

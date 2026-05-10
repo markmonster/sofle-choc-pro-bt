@@ -54,10 +54,10 @@ layers:
   - WIN
   - ALT
   - CTRL
-  - {t: TOGGLE LOWER, h: '&lhr_lower 1 1'}
+  - {t: TOGGLE LOWER, h: '&lhr_lower 1'}
   - RET
   - SPACE
-  - {t: TOGGLE RAISE, h: '&lhr_raise 2 2'}
+  - {t: TOGGLE RAISE, h: '&lhr_raise 2'}
   - CTRL
   - ALT
   - TOGGLE CODE

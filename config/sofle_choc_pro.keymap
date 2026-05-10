@@ -33,7 +33,7 @@
 
     lhr_lower: lhr_lower {
       compatible = "zmk,behavior-layer-hold-rgb";
-      #binding-cells = <1>;
+      layer = <LOWER>;
       hold-hue = <210>;
       hold-sat = <90>;
       hold-bri = <35>;
@@ -62,7 +62,7 @@
 
     lhr_raise: lhr_raise {
       compatible = "zmk,behavior-layer-hold-rgb";
-      #binding-cells = <1>;
+      layer = <RAISE>;
       hold-hue = <285>;
       hold-sat = <90>;
       hold-bri = <35>;
@@ -132,7 +132,7 @@
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "hold-preferred";
-      bindings = <&lhr_lower LOWER &lower_tog_rgb>;  /* hold, tap */
+      bindings = <&lhr_lower &lower_tog_rgb>;  /* hold, tap */
     };
 
     lt_raise: lt_raise {
@@ -140,7 +140,7 @@
       #binding-cells = <2>;
       tapping-term-ms = <220>;
       flavor = "hold-preferred";
-      bindings = <&lhr_raise RAISE &raise_tog_rgb>;  /* hold, tap */
+      bindings = <&lhr_raise &raise_tog_rgb>;  /* hold, tap */
     };
 
     /* --- Home Row Mods helper: tap = key, hold = modifier ------------------ */

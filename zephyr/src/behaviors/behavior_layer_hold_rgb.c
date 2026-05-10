@@ -20,6 +20,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 struct behavior_layer_hold_rgb_config {
     struct zmk_led_hsb hold_color;
     struct zmk_led_hsb base_color;
+    uint8_t layer;
     bool locking;
 };
 
@@ -33,7 +34,7 @@ static int on_layer_hold_rgb_binding_pressed(struct zmk_behavior_binding *bindin
         LOG_DBG("Failed to set hold RGB color: %d", err);
     }
 
-    return zmk_keymap_layer_activate(binding->param1, cfg->locking);
+    return zmk_keymap_layer_activate(cfg->layer, cfg->locking);
 }
 
 static int on_layer_hold_rgb_binding_released(struct zmk_behavior_binding *binding,
@@ -41,7 +42,7 @@ static int on_layer_hold_rgb_binding_released(struct zmk_behavior_binding *bindi
     const struct behavior_layer_hold_rgb_config *cfg =
         zmk_behavior_get_binding(binding->behavior_dev)->config;
 
-    int layer_err = zmk_keymap_layer_deactivate(binding->param1, cfg->locking);
+    int layer_err = zmk_keymap_layer_deactivate(cfg->layer, cfg->locking);
     int rgb_err = zmk_rgb_underglow_set_hsb(cfg->base_color);
 
     if (rgb_err) {
@@ -70,6 +71,7 @@ static const struct behavior_driver_api behavior_layer_hold_rgb_driver_api = {
                 .s = DT_INST_PROP(n, base_sat),                                                   \
                 .b = DT_INST_PROP(n, base_bri),                                                   \
             },                                                                                    \
+        .layer = DT_INST_PROP(n, layer),                                                          \
         .locking = DT_INST_PROP_OR(n, locking, false),                                            \
     };                                                                                            \
     BEHAVIOR_DT_INST_DEFINE(n, NULL, NULL, NULL, &behavior_layer_hold_rgb_config_##n,            \
