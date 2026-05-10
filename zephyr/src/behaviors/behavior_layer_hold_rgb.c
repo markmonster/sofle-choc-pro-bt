@@ -102,20 +102,12 @@ static int on_layer_state_changed(const zmk_event_t *eh) {
     }
 
     if (!event->state) {
-        if (layer == CODE_LAYER || zmk_keymap_highest_layer_active() == BASE_LAYER) {
-            return zmk_rgb_underglow_off();
-        }
-
         return 0;
     }
 
     int err = zmk_rgb_underglow_on();
     if (err) {
         return err;
-    }
-
-    if (layer == BASE_LAYER) {
-        return zmk_rgb_underglow_off();
     }
 
     return zmk_rgb_underglow_set_hsb(color);
