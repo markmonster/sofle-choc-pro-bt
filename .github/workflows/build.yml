@@ -6,17 +6,74 @@ permissions:
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
     with:
       archive_name: firmware-${{ github.run_number }}
 
   draw-keymaps:
-    uses: caksoylar/keymap-drawer/.github/workflows/draw-zmk.yml@main
-    with:
-      keymap_patterns: "config/*.keymap"
-      config_path: keymap-drawer/config.yaml
-      output_folder: keymap-drawer
-      install_branch: main
-      json_path: keymap-drawer/layouts
-      destination: artifact
-      artifact_name: keymap-drawer-${{ github.run_number }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Install keymap-drawer
+        run: |
+          python -m pip install --user --upgrade pip
+          python -m pip install --user keymap-drawer west
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch west modules
+        run: |
+          west init -l config
+          west config --local manifest.project-filter " -zmk,-zephyr"
+          west update --fetch-opt=--filter=tree:0
+
+      - name: Draw keymaps
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob extglob
+
+          mkdir -p keymap-drawer
+
+          for keymap_file in config/*.keymap; do
+            keyboard=$(basename -s .keymap "$keymap_file")
+            yaml_out="keymap-drawer/$keyboard.yaml"
+            svg_out="keymap-drawer/$keyboard.svg"
+
+            dts_candidates=({,*/}boards/*/*/${keyboard}-layout{,s}.dtsi)
+            draw_args=()
+            if [[ ${#dts_candidates[@]} -gt 0 ]]; then
+              draw_args+=(--dts-layout "${dts_candidates[0]}")
+            fi
+
+            tmp_yaml=$(mktemp)
+            tmp_svg=$(mktemp)
+
+            keymap -c keymap-drawer/config.yaml parse -z "$keymap_file" >"$tmp_yaml"
+            mv "$tmp_yaml" "$yaml_out"
+
+            keymap -c keymap-drawer/config.yaml draw "$yaml_out" "${draw_args[@]}" >"$tmp_svg"
+            mv "$tmp_svg" "$svg_out"
+          done
+
+      - name: Commit updated drawings
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add keymap-drawer/*.svg keymap-drawer/*.yaml
+
+          if git diff --cached --quiet; then
+            echo "No drawing changes to commit."
+            exit 0
+          fi
+
+          git commit -m "🎨 update keymap drawings"
+          git push
