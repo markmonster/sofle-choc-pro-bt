@@ -60,7 +60,7 @@ layers:
   - {t: TOGGLE RAISE, h: RAISE}
   - CTRL
   - ALT
-  - {t: CODE, h: toggle}
+  - TOGGLE CODE
   lower:
   - {t: ▽, type: trans}
   - F1
@@ -295,7 +295,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - CODE
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}

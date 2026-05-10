@@ -20,6 +20,8 @@ parse_config:
     "&raise_tog_rgb": "TOGGLE RAISE"
     "&lower_off_rgb": "LOWER"
     "&raise_off_rgb": "RAISE"
+    "&code_tog_rgb": "TOGGLE CODE"
+    "&code_off_rgb": "CODE"
   layer_legend_map:
     default: "BASE"
     lower: "LOWER"
