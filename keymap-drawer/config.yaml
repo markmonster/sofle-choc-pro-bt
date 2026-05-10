@@ -16,6 +16,7 @@ parse_config:
     left_gui: "WIN"
     right_gui: "WIN"
   raw_binding_map:
+    "&rgb_ug RGB_ON": "RGB ON"
     "&lower_tog_rgb": "TOGGLE LOWER"
     "&raise_tog_rgb": "TOGGLE RAISE"
     "&lower_off_rgb": "LOWER"

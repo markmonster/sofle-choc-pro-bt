@@ -66,11 +66,12 @@ static const struct behavior_driver_api behavior_layer_hold_rgb_driver_api = {
     .binding_released = on_layer_hold_rgb_binding_released,
 };
 
-static int on_layer_state_changed(const struct zmk_event_header *eh) {
-    if (!is_layer_state_changed(eh)) {
+static int on_layer_state_changed(const zmk_event_t *eh) {
+    if (!is_zmk_layer_state_changed(eh)) {
         return -EINVAL;
     }
 
+    const struct zmk_layer_state_changed *event = cast_zmk_layer_state_changed(eh);
     zmk_keymap_layer_index_t layer = zmk_keymap_highest_layer_active();
     struct zmk_led_hsb color = {
         .h = 35,
@@ -98,6 +99,23 @@ static int on_layer_state_changed(const struct zmk_event_header *eh) {
     default:
         color = (struct zmk_led_hsb){.h = 35, .s = 20, .b = 0};
         break;
+    }
+
+    if (!event->state) {
+        if (layer == BASE_LAYER) {
+            return zmk_rgb_underglow_off();
+        }
+
+        return 0;
+    }
+
+    int err = zmk_rgb_underglow_on();
+    if (err) {
+        return err;
+    }
+
+    if (layer == BASE_LAYER) {
+        return zmk_rgb_underglow_off();
     }
 
     return zmk_rgb_underglow_set_hsb(color);

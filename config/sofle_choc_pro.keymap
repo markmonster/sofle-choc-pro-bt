@@ -46,6 +46,7 @@
       compatible = "zmk,behavior-macro";
       #binding-cells = <0>;
       bindings = <
+        &rgb_ug RGB_ON
         &rgb_ug RGB_COLOR_HSB(210, 90, 35) /* blue */
         &tog LOWER
       >;
@@ -75,6 +76,7 @@
       compatible = "zmk,behavior-macro";
       #binding-cells = <0>;
       bindings = <
+        &rgb_ug RGB_ON
         &rgb_ug RGB_COLOR_HSB(285, 90, 35) /* purple */
         &tog RAISE
       >;
@@ -93,6 +95,7 @@
       compatible = "zmk,behavior-macro";
       #binding-cells = <0>;
       bindings = <
+        &rgb_ug RGB_ON
         &rgb_ug RGB_COLOR_HSB(35, 90, 35) /* orange */
         &tog CODE
       >;
@@ -111,6 +114,7 @@
       compatible = "zmk,behavior-macro";
       #binding-cells = <0>;
       bindings = <
+        &rgb_ug RGB_ON
         &rgb_ug RGB_COLOR_HSB(140, 90, 35) /* green */
         &tog HRM_ON
       >;
