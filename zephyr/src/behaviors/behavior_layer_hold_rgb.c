@@ -9,13 +9,22 @@
 
 #include <drivers/behavior.h>
 
+#include <zmk/event_manager.h>
 #include <zmk/behavior.h>
+#include <zmk/events/layer_state_changed.h>
 #include <zmk/keymap.h>
 #include <zmk/rgb_underglow.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
+
+#define BASE_LAYER 0
+#define LOWER_LAYER 1
+#define RAISE_LAYER 2
+#define ADJUST_LAYER 3
+#define CODE_LAYER 4
+#define HRM_ON_LAYER 5
 
 struct behavior_layer_hold_rgb_config {
     struct zmk_led_hsb hold_color;
@@ -56,6 +65,46 @@ static const struct behavior_driver_api behavior_layer_hold_rgb_driver_api = {
     .binding_pressed = on_layer_hold_rgb_binding_pressed,
     .binding_released = on_layer_hold_rgb_binding_released,
 };
+
+static int on_layer_state_changed(const struct zmk_event_header *eh) {
+    if (!is_layer_state_changed(eh)) {
+        return -EINVAL;
+    }
+
+    zmk_keymap_layer_index_t layer = zmk_keymap_highest_layer_active();
+    struct zmk_led_hsb color = {
+        .h = 35,
+        .s = 20,
+        .b = 0,
+    };
+
+    switch (layer) {
+    case LOWER_LAYER:
+        color = (struct zmk_led_hsb){.h = 210, .s = 90, .b = 35};
+        break;
+    case RAISE_LAYER:
+        color = (struct zmk_led_hsb){.h = 285, .s = 90, .b = 35};
+        break;
+    case ADJUST_LAYER:
+        color = (struct zmk_led_hsb){.h = 60, .s = 90, .b = 30};
+        break;
+    case CODE_LAYER:
+        color = (struct zmk_led_hsb){.h = 35, .s = 90, .b = 35};
+        break;
+    case HRM_ON_LAYER:
+        color = (struct zmk_led_hsb){.h = 140, .s = 90, .b = 35};
+        break;
+    case BASE_LAYER:
+    default:
+        color = (struct zmk_led_hsb){.h = 35, .s = 20, .b = 0};
+        break;
+    }
+
+    return zmk_rgb_underglow_set_hsb(color);
+}
+
+ZMK_LISTENER(layer_rgb_listener, on_layer_state_changed)
+ZMK_SUBSCRIPTION(layer_rgb_listener, zmk_layer_state_changed);
 
 #define LHR_INST(n)                                                                               \
     static const struct behavior_layer_hold_rgb_config behavior_layer_hold_rgb_config_##n = {    \
