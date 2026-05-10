@@ -71,8 +71,7 @@ static int on_layer_state_changed(const zmk_event_t *eh) {
         return -EINVAL;
     }
 
-    const struct zmk_layer_state_changed *event = cast_zmk_layer_state_changed(eh);
-    zmk_keymap_layer_index_t layer = event->layer;
+    zmk_keymap_layer_index_t layer = zmk_keymap_highest_layer_active();
     struct zmk_led_hsb color = {
         .h = 35,
         .s = 20,
@@ -101,16 +100,12 @@ static int on_layer_state_changed(const zmk_event_t *eh) {
         break;
     }
 
-    if (!event->state) {
-        return 0;
+    if (layer == BASE_LAYER) {
+        return zmk_rgb_underglow_off();
     }
 
     int err = zmk_rgb_underglow_on();
-    if (err) {
-        return err;
-    }
-
-    return zmk_rgb_underglow_set_hsb(color);
+    return err ? err : zmk_rgb_underglow_set_hsb(color);
 }
 
 ZMK_LISTENER(layer_rgb_listener, on_layer_state_changed)
