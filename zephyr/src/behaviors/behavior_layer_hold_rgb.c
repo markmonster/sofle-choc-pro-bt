@@ -5,6 +5,7 @@
 #define DT_DRV_COMPAT zmk_behavior_layer_hold_rgb
 
 #include <zephyr/device.h>
+#include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
 #include <drivers/behavior.h>
@@ -66,10 +67,8 @@ static const struct behavior_driver_api behavior_layer_hold_rgb_driver_api = {
     .binding_released = on_layer_hold_rgb_binding_released,
 };
 
-static int on_layer_state_changed(const zmk_event_t *eh) {
-    if (!is_zmk_layer_state_changed(eh)) {
-        return -EINVAL;
-    }
+static void update_layer_rgb(struct k_work *work) {
+    ARG_UNUSED(work);
 
     zmk_keymap_layer_index_t layer = zmk_keymap_highest_layer_active();
     struct zmk_led_hsb color = {
@@ -101,11 +100,35 @@ static int on_layer_state_changed(const zmk_event_t *eh) {
     }
 
     if (layer == BASE_LAYER) {
-        return zmk_rgb_underglow_off();
+        int err = zmk_rgb_underglow_off();
+        if (err) {
+            LOG_DBG("Failed to turn RGB off: %d", err);
+        }
+
+        return;
     }
 
     int err = zmk_rgb_underglow_on();
-    return err ? err : zmk_rgb_underglow_set_hsb(color);
+    if (err) {
+        LOG_DBG("Failed to turn RGB on: %d", err);
+        return;
+    }
+
+    err = zmk_rgb_underglow_set_hsb(color);
+    if (err) {
+        LOG_DBG("Failed to set layer RGB color: %d", err);
+    }
+}
+
+K_WORK_DEFINE(layer_rgb_work, update_layer_rgb);
+
+static int on_layer_state_changed(const zmk_event_t *eh) {
+    if (!is_zmk_layer_state_changed(eh)) {
+        return -EINVAL;
+    }
+
+    k_work_submit(&layer_rgb_work);
+    return 0;
 }
 
 ZMK_LISTENER(layer_rgb_listener, on_layer_state_changed)
