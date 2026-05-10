@@ -14,6 +14,7 @@
 #define LOWER 1
 #define RAISE 2
 #define ADJUST 3
+#define HRM_OFF 4
 
 / {
 
@@ -131,6 +132,7 @@
       //
       // Notes:
       // - A/S/D/F and J/K/L/; are Home Row Mods (tap letters, hold = modifiers).
+      // - HRM can be toggled off from the ADJUST layer.
       // - ESC is a normal key.
       // - LOWER/RAISE are hold-tap: hold = momentary layer, tap = toggle layer + set RGB color.
 
@@ -189,14 +191,25 @@
       // | EXTPWR | RGB_HUD | RGB_HUI | RGB_SAD | RGB_SAI | RGB_EFF |                  |      |      |       |      |       |       |
       // |        | RGB_BRD | RGB_BRI |         |         |         |                  |      |      |       |      |       |       |
       // |        |         |         |         |         |         | RGB_TOG | |      |      |      |       |      |       |       |
-      //                    |         |         |         |         |         | |      |      |      |       |      |
+      // HRM toggle lives in the first left thumb slot.
       display-name = "adjust";
       bindings = <
         &bt BT_CLR        &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4                            &none &none &none &none &none &none
         &ext_power EP_TOG &rgb_ug RGB_HUD &rgb_ug RGB_HUI &rgb_ug RGB_SAD &rgb_ug RGB_SAI &rgb_ug RGB_EFF                         &none &none &none &none &none &none
         &none             &rgb_ug RGB_BRD &rgb_ug RGB_BRI &none           &none           &none                                   &none &none &none &none &none &none
         &none             &none           &none           &none           &none           &none            &rgb_ug RGB_TOG &none  &none &none &none &none &none &none
-        &none             &none           &none           &lower_off_rgb  &none           &none                                   &raise_off_rgb &none &none &none
+        &tog HRM_OFF      &none           &none           &lower_off_rgb  &none           &none                                   &raise_off_rgb &none &none &none
+      >;
+    };
+
+    hrm_off_layer {
+      display-name = "hrm-off";
+      bindings = <
+        &trans   &trans   &trans   &trans   &trans   &trans                         &trans   &trans   &trans   &trans   &trans   &trans
+        &trans   &trans   &trans   &trans   &trans   &trans                         &trans   &trans   &trans   &trans   &trans   &trans
+        &trans   &kp A    &kp S    &kp D    &kp F    &trans   &trans               &kp J    &kp K    &kp L    &kp SEMI &trans
+        &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans     &trans   &trans   &trans   &trans   &trans   &trans
+        &trans   &trans   &trans   &trans   &trans   &trans                         &trans   &trans   &trans   &trans
       >;
     };
   };
