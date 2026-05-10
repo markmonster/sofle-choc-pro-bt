@@ -54,10 +54,10 @@ layers:
   - WIN
   - ALT
   - CTRL
-  - {t: TOGGLE LOWER, h: LOWER}
+  - {t: TOGGLE LOWER, h: '&lhr_lower 1 1'}
   - RET
   - SPACE
-  - {t: TOGGLE RAISE, h: RAISE}
+  - {t: TOGGLE RAISE, h: '&lhr_raise 2 2'}
   - CTRL
   - ALT
   - TOGGLE CODE
@@ -115,7 +115,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: LOWER, type: held}
+  - LOWER
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -179,7 +179,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: RAISE, type: held}
+  - RAISE
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -237,10 +237,10 @@ layers:
   - TOGGLE HRM
   - ''
   - ''
-  - {t: LOWER, type: held}
+  - LOWER
   - ''
   - ''
-  - {t: RAISE, type: held}
+  - RAISE
   - ''
   - ''
   - ''

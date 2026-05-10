@@ -370,9 +370,9 @@ text.right {
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
 </g>
-<g transform="translate(296, 264) rotate(12.0)" class="key held keypos-53">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key held"/>
-<text x="0" y="0" class="key held tap">LOWER</text>
+<g transform="translate(296, 264) rotate(12.0)" class="key keypos-53">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
+<text x="0" y="0" class="key tap">LOWER</text>
 </g>
 <g transform="translate(356, 267) rotate(24.0)" class="key trans keypos-54">
 <rect rx="6" ry="6" x="-26" y="-40" width="52" height="80" class="key trans"/>
@@ -636,9 +636,9 @@ text.right {
 <rect rx="6" ry="6" x="-26" y="-40" width="52" height="80" class="key trans"/>
 <text x="0" y="0" class="key trans tap">▽</text>
 </g>
-<g transform="translate(544, 264) rotate(-12.0)" class="key held keypos-56">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key held"/>
-<text x="0" y="0" class="key held tap">RAISE</text>
+<g transform="translate(544, 264) rotate(-12.0)" class="key keypos-56">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
+<text x="0" y="0" class="key tap">RAISE</text>
 </g>
 <g transform="translate(602, 259)" class="key trans keypos-57">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
