@@ -36,7 +36,7 @@ static const lv_img_dsc_t *const logo_cycle[] = {
 static const size_t logo_cycle_count = sizeof(logo_cycle) / sizeof(logo_cycle[0]);
 static const char *const logo_labels[] = {
     "esteam.life",
-    "mc",
+    "Monster\nConsultancy",
 };
 static const uint32_t logo_rotation_period_ms = 5U * 60U * 1000U;
 static lv_obj_t *art_obj;
@@ -167,7 +167,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_set_width(brand_label, 160);
     lv_obj_set_style_text_color(brand_label, LVGL_FOREGROUND, 0);
     lv_obj_set_style_text_align(brand_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_set_style_text_font(brand_label, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(brand_label, &lv_font_unscii_8, 0);
     lv_label_set_long_mode(brand_label, LV_LABEL_LONG_CLIP);
     lv_obj_align(brand_label, LV_ALIGN_BOTTOM_MID, 0, -1);
     update_brand_label();
