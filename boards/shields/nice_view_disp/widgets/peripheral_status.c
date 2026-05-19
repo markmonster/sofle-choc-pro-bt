@@ -174,6 +174,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, art_pos, 0);
 
     brand_canvas = lv_canvas_create(widget->obj);
+    lv_obj_set_size(brand_canvas, 20, 68);
     lv_obj_align(brand_canvas, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
     lv_canvas_set_buffer(brand_canvas, brand_cbuf, CANVAS_SIZE, CANVAS_SIZE,
                          LV_IMG_CF_TRUE_COLOR);
