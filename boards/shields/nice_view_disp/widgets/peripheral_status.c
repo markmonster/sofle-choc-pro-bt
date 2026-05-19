@@ -22,9 +22,22 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include "peripheral_status.h"
 
+LV_IMG_DECLARE(esteamlogo);
 LV_IMG_DECLARE(mclogo);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
+
+static const lv_img_dsc_t *const logo_cycle[] = {
+    /* Add new logo assets here, and include the matching *.c file in CMakeLists.txt. */
+    &esteamlogo,
+    &mclogo,
+};
+
+static const size_t logo_cycle_count = sizeof(logo_cycle) / sizeof(logo_cycle[0]);
+static const uint32_t logo_rotation_period_ms = 5U * 60U * 1000U;
+static lv_obj_t *art_obj;
+static size_t current_logo_index;
+static lv_timer_t *logo_rotation_timer;
 
 struct peripheral_status_state {
     bool connected;
@@ -105,6 +118,16 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_peripheral_status, struct peripheral_status_s
                             output_status_update_cb, get_state)
 ZMK_SUBSCRIPTION(widget_peripheral_status, zmk_split_peripheral_status_changed);
 
+static void rotate_logo_timer_cb(lv_timer_t *timer) {
+    ARG_UNUSED(timer);
+
+    current_logo_index = (current_logo_index + 1) % logo_cycle_count;
+
+    if (art_obj != NULL) {
+        lv_img_set_src(art_obj, logo_cycle[current_logo_index]);
+    }
+}
+
 #ifdef CONFIG_NICE_VIEW_DISP_ROTATE_180 // sets positions for default and flipped canvases
 int art_pos = 20;
 int top_pos = 0;
@@ -121,9 +144,16 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
 
     lv_obj_t *art = lv_img_create(widget->obj);
-    lv_img_set_src(art, &mclogo);
+    art_obj = art;
+    current_logo_index = 0;
+    lv_img_set_src(art, logo_cycle[current_logo_index]);
     lv_obj_set_size(art, 140, 68);
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, art_pos, 0);
+
+    if (logo_rotation_timer == NULL) {
+        logo_rotation_timer =
+            lv_timer_create(rotate_logo_timer_cb, logo_rotation_period_ms, NULL);
+    }
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
