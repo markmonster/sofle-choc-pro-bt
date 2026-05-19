@@ -168,6 +168,9 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_set_style_text_color(brand_label, LVGL_FOREGROUND, 0);
     lv_obj_set_style_text_align(brand_label, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_set_style_text_font(brand_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_transform_angle(brand_label, 900, 0);
+    lv_obj_set_style_transform_pivot_x(brand_label, 80, 0);
+    lv_obj_set_style_transform_pivot_y(brand_label, 34, 0);
     lv_label_set_long_mode(brand_label, LV_LABEL_LONG_CLIP);
     lv_obj_align(brand_label, LV_ALIGN_BOTTOM_MID, 0, -1);
     update_brand_label();
