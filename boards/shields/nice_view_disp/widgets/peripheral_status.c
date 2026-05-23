@@ -44,19 +44,19 @@ static lv_obj_t *brand_canvas;
 static lv_color_t brand_cbuf[CANVAS_SIZE * CANVAS_SIZE];
 static size_t current_logo_index;
 static lv_timer_t *logo_rotation_timer;
+static lv_obj_t *brand_label;
 
 static void update_brand_label(void) {
     if (brand_canvas != NULL) {
-        lv_draw_label_dsc_t label_dsc;
-        init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10,
-                       LV_TEXT_ALIGN_CENTER);
         lv_draw_img_dsc_t img_dsc;
         lv_draw_img_dsc_init(&img_dsc);
 
         lv_canvas_fill_bg(brand_canvas, LVGL_BACKGROUND, LV_OPA_COVER);
         lv_canvas_draw_img(brand_canvas, -72, 0, logo_cycle[current_logo_index], &img_dsc);
-        lv_canvas_draw_text(brand_canvas, 0, 46, CANVAS_SIZE, &label_dsc,
-                            logo_labels[current_logo_index]);
+    }
+
+    if (brand_label != NULL) {
+        lv_label_set_text(brand_label, logo_labels[current_logo_index]);
     }
 }
 
@@ -177,6 +177,19 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_align(brand_canvas, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
     lv_canvas_set_buffer(brand_canvas, brand_cbuf, CANVAS_SIZE, CANVAS_SIZE,
                          LV_IMG_CF_TRUE_COLOR);
+
+    brand_label = lv_label_create(widget->obj);
+    lv_obj_align(brand_label, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
+    lv_obj_set_size(brand_label, CANVAS_SIZE, CANVAS_SIZE);
+    lv_obj_set_style_bg_opa(brand_label, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_border_opa(brand_label, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_text_color(brand_label, LVGL_FOREGROUND, 0);
+    lv_obj_set_style_text_font(brand_label, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_align(brand_label, LV_TEXT_ALIGN_CENTER, 0);
+    lv_obj_set_style_transform_rotation(brand_label, 2700, 0);
+    lv_obj_set_style_transform_pivot_x(brand_label, CANVAS_SIZE / 2, 0);
+    lv_obj_set_style_transform_pivot_y(brand_label, CANVAS_SIZE / 2, 0);
+    lv_obj_add_flag(brand_label, LV_OBJ_FLAG_OVERFLOW_VISIBLE);
     update_brand_label();
 
     if (logo_rotation_timer == NULL) {
