@@ -66,7 +66,7 @@ static void update_brand_label(void) {
         init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
 
         lv_canvas_draw_rect(brand_text_src_canvas, 0, 0, 68, 34, &rect_black_dsc);
-        lv_canvas_draw_text(brand_text_src_canvas, 0, 0, 68, &label_dsc,
+        lv_canvas_draw_text(brand_text_src_canvas, 0, 5, 68, &label_dsc,
                             logo_labels[current_logo_index]);
 
         lv_img_dsc_t img;
