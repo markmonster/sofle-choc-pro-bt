@@ -50,11 +50,8 @@ static void update_brand_label(void) {
         lv_draw_label_dsc_t label_dsc;
         init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10,
                        LV_TEXT_ALIGN_CENTER);
-        lv_draw_img_dsc_t img_dsc;
-        lv_draw_img_dsc_init(&img_dsc);
 
         lv_canvas_fill_bg(brand_canvas, LVGL_BACKGROUND, LV_OPA_COVER);
-        lv_canvas_draw_img(brand_canvas, -72, 0, logo_cycle[current_logo_index], &img_dsc);
         lv_canvas_draw_text(brand_canvas, 0, 46, CANVAS_SIZE, &label_dsc,
                             logo_labels[current_logo_index]);
 
