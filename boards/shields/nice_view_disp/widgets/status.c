@@ -129,8 +129,6 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
-    lv_draw_arc_dsc_t arc_dsc_filled;
-    init_arc_dsc(&arc_dsc_filled, LVGL_FOREGROUND, 9);
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_BACKGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_CENTER);
 
@@ -143,10 +141,9 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     int indicator_y = 13;
     int pill_left = indicator_x - 21;
     int pill_top = indicator_y - 9;
+    rect_white_dsc.radius = 9;
 
     lv_canvas_draw_rect(canvas, pill_left, pill_top, 42, 18, &rect_white_dsc);
-    lv_canvas_draw_arc(canvas, pill_left + 9, indicator_y, 9, 0, 359, &arc_dsc_filled);
-    lv_canvas_draw_arc(canvas, pill_left + 33, indicator_y, 9, 0, 359, &arc_dsc_filled);
 
     char label[8];
     snprintf(label, sizeof(label), "BT %d", active_slot);
