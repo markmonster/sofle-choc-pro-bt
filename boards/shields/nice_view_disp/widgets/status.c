@@ -129,27 +129,28 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
-    lv_draw_arc_dsc_t arc_dsc;
-    init_arc_dsc(&arc_dsc, LVGL_FOREGROUND, 2);
     lv_draw_arc_dsc_t arc_dsc_filled;
     init_arc_dsc(&arc_dsc_filled, LVGL_FOREGROUND, 9);
-    lv_draw_label_dsc_t label_dsc_black;
-    init_label_dsc(&label_dsc_black, LVGL_BACKGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_BACKGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_CENTER);
 
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw one slot indicator at the top-row height.
+    // Draw one centered slot indicator at the top-row height.
     int active_slot = state->active_profile_index + 1;
     int indicator_x = 34;
     int indicator_y = 13;
+    int pill_left = indicator_x - 21;
+    int pill_top = indicator_y - 9;
 
-    lv_canvas_draw_arc(canvas, indicator_x, indicator_y, 13, 0, 360, &arc_dsc);
-    lv_canvas_draw_arc(canvas, indicator_x, indicator_y, 9, 0, 359, &arc_dsc_filled);
+    lv_canvas_draw_rect(canvas, pill_left, pill_top, 42, 18, &rect_white_dsc);
+    lv_canvas_draw_arc(canvas, pill_left + 9, indicator_y, 9, 0, 359, &arc_dsc_filled);
+    lv_canvas_draw_arc(canvas, pill_left + 33, indicator_y, 9, 0, 359, &arc_dsc_filled);
 
-    char label[2];
-    snprintf(label, sizeof(label), "%d", active_slot);
-    lv_canvas_draw_text(canvas, indicator_x - 8, indicator_y - 10, 16, &label_dsc_black, label);
+    char label[8];
+    snprintf(label, sizeof(label), "BT %d", active_slot);
+    lv_canvas_draw_text(canvas, 0, pill_top + 1, CANVAS_SIZE, &label_dsc, label);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
