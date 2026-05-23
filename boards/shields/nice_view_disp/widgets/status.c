@@ -133,35 +133,23 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     init_arc_dsc(&arc_dsc, LVGL_FOREGROUND, 2);
     lv_draw_arc_dsc_t arc_dsc_filled;
     init_arc_dsc(&arc_dsc_filled, LVGL_FOREGROUND, 9);
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
     lv_draw_label_dsc_t label_dsc_black;
     init_label_dsc(&label_dsc_black, LVGL_BACKGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
 
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw circles
-    int circle_offsets[5][2] = {
-        {13, 13}, {55, 13}, {34, 34}, {13, 55}, {55, 55},
-    };
+    // Draw one slot indicator at the top-row height.
+    int active_slot = state->active_profile_index + 1;
+    int indicator_x = 34;
+    int indicator_y = 13;
 
-    for (int i = 0; i < 5; i++) {
-        bool selected = i == state->active_profile_index;
+    lv_canvas_draw_arc(canvas, indicator_x, indicator_y, 13, 0, 360, &arc_dsc);
+    lv_canvas_draw_arc(canvas, indicator_x, indicator_y, 9, 0, 359, &arc_dsc_filled);
 
-        lv_canvas_draw_arc(canvas, circle_offsets[i][0], circle_offsets[i][1], 13, 0, 360,
-                           &arc_dsc);
-
-        if (selected) {
-            lv_canvas_draw_arc(canvas, circle_offsets[i][0], circle_offsets[i][1], 9, 0, 359,
-                               &arc_dsc_filled);
-        }
-
-        char label[2];
-        snprintf(label, sizeof(label), "%d", i + 1);
-        lv_canvas_draw_text(canvas, circle_offsets[i][0] - 8, circle_offsets[i][1] - 10, 16,
-                            (selected ? &label_dsc_black : &label_dsc), label);
-    }
+    char label[2];
+    snprintf(label, sizeof(label), "%d", active_slot);
+    lv_canvas_draw_text(canvas, indicator_x - 8, indicator_y - 10, 16, &label_dsc_black, label);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
