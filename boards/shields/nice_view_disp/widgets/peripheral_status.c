@@ -55,7 +55,7 @@ static void update_brand_label(void) {
 
         lv_canvas_fill_bg(brand_canvas, LVGL_BACKGROUND, LV_OPA_COVER);
         lv_canvas_draw_img(brand_canvas, -72, 0, logo_cycle[current_logo_index], &img_dsc);
-        lv_canvas_draw_text(brand_canvas, 0, 5, CANVAS_SIZE, &label_dsc,
+        lv_canvas_draw_text(brand_canvas, 0, 11, CANVAS_SIZE, &label_dsc,
                             logo_labels[current_logo_index]);
 
         rotate_canvas(brand_canvas, brand_cbuf);
