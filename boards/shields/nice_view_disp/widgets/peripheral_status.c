@@ -40,34 +40,25 @@ static const char *const logo_labels[] = {
 };
 static const uint32_t logo_rotation_period_ms = 5U * 60U * 1000U;
 static lv_obj_t *art_obj;
-static lv_obj_t *brand_src_canvas;
-static lv_obj_t *brand_dst_canvas;
-static lv_color_t brand_src_cbuf[68 * 34];
-static lv_color_t brand_dst_cbuf[34 * 68];
+static lv_obj_t *brand_canvas;
+static lv_color_t brand_cbuf[CANVAS_SIZE * CANVAS_SIZE];
 static size_t current_logo_index;
 static lv_timer_t *logo_rotation_timer;
 
 static void update_brand_label(void) {
-    if (brand_src_canvas != NULL && brand_dst_canvas != NULL) {
+    if (brand_canvas != NULL) {
         lv_draw_label_dsc_t label_dsc;
         init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10,
                        LV_TEXT_ALIGN_CENTER);
-        lv_draw_rect_dsc_t rect_black_dsc;
-        init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+        lv_draw_img_dsc_t img_dsc;
+        lv_draw_img_dsc_init(&img_dsc);
 
-        lv_canvas_draw_rect(brand_src_canvas, 0, 0, 68, 34, &rect_black_dsc);
-        lv_canvas_draw_text(brand_src_canvas, 0, 0, 68, &label_dsc,
+        lv_canvas_fill_bg(brand_canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+        lv_canvas_draw_img(brand_canvas, -72, 0, logo_cycle[current_logo_index], &img_dsc);
+        lv_canvas_draw_text(brand_canvas, 0, 5, CANVAS_SIZE, &label_dsc,
                             logo_labels[current_logo_index]);
 
-        lv_img_dsc_t img;
-        img.data = (void *)brand_src_cbuf;
-        img.header.cf = LV_IMG_CF_TRUE_COLOR;
-        img.header.w = 68;
-        img.header.h = 34;
-
-        lv_canvas_fill_bg(brand_dst_canvas, LVGL_BACKGROUND, LV_OPA_COVER);
-        lv_canvas_transform(brand_dst_canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0, 34, 17,
-                            true);
+        rotate_canvas(brand_canvas, brand_cbuf);
     }
 }
 
@@ -181,17 +172,13 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     art_obj = art;
     current_logo_index = 0;
     lv_img_set_src(art, logo_cycle[current_logo_index]);
-    lv_obj_set_size(art, 126, 68);
+    lv_obj_set_size(art, 140, 68);
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, art_pos, 0);
 
-    brand_src_canvas = lv_canvas_create(widget->obj);
-    lv_obj_add_flag(brand_src_canvas, LV_OBJ_FLAG_HIDDEN);
-    lv_canvas_set_buffer(brand_src_canvas, brand_src_cbuf, 68, 34, LV_IMG_CF_TRUE_COLOR);
-
-    brand_dst_canvas = lv_canvas_create(widget->obj);
-    lv_obj_set_size(brand_dst_canvas, 34, 68);
-    lv_obj_align(brand_dst_canvas, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
-    lv_canvas_set_buffer(brand_dst_canvas, brand_dst_cbuf, 34, 68, LV_IMG_CF_TRUE_COLOR);
+    brand_canvas = lv_canvas_create(widget->obj);
+    lv_obj_align(brand_canvas, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
+    lv_canvas_set_buffer(brand_canvas, brand_cbuf, CANVAS_SIZE, CANVAS_SIZE,
+                         LV_IMG_CF_TRUE_COLOR);
     update_brand_label();
 
     if (logo_rotation_timer == NULL) {
