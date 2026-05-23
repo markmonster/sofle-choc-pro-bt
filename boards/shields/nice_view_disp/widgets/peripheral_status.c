@@ -40,13 +40,34 @@ static const char *const logo_labels[] = {
 };
 static const uint32_t logo_rotation_period_ms = 5U * 60U * 1000U;
 static lv_obj_t *art_obj;
-static lv_obj_t *brand_label;
+static lv_obj_t *brand_src_canvas;
+static lv_obj_t *brand_dst_canvas;
+static lv_color_t brand_src_cbuf[68 * 20];
+static lv_color_t brand_dst_cbuf[20 * 68];
 static size_t current_logo_index;
 static lv_timer_t *logo_rotation_timer;
 
 static void update_brand_label(void) {
-    if (brand_label != NULL) {
-        lv_label_set_text(brand_label, logo_labels[current_logo_index]);
+    if (brand_src_canvas != NULL && brand_dst_canvas != NULL) {
+        lv_draw_label_dsc_t label_dsc;
+        init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10,
+                       LV_TEXT_ALIGN_CENTER);
+        lv_draw_rect_dsc_t rect_black_dsc;
+        init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+
+        lv_canvas_draw_rect(brand_src_canvas, 0, 0, 68, 20, &rect_black_dsc);
+        lv_canvas_draw_text(brand_src_canvas, 0, 0, 68, &label_dsc,
+                            logo_labels[current_logo_index]);
+
+        lv_img_dsc_t img;
+        img.data = (void *)brand_src_cbuf;
+        img.header.cf = LV_IMG_CF_TRUE_COLOR;
+        img.header.w = 68;
+        img.header.h = 20;
+
+        lv_canvas_fill_bg(brand_dst_canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+        lv_canvas_transform(brand_dst_canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0, 34, 10,
+                            true);
     }
 }
 
@@ -151,7 +172,6 @@ int top_pos = 92;
 
 int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
-    lv_obj_add_flag(widget->obj, LV_OBJ_FLAG_OVERFLOW_VISIBLE);
     lv_obj_set_size(widget->obj, 160, 68);
     lv_obj_t *top = lv_canvas_create(widget->obj);
     lv_obj_align(top, LV_ALIGN_TOP_LEFT, top_pos, 0);
@@ -164,17 +184,14 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_set_size(art, 140, 68);
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, art_pos, 0);
 
-    brand_label = lv_label_create(widget->obj);
-    lv_obj_set_size(brand_label, 68, 68);
-    lv_obj_add_flag(brand_label, LV_OBJ_FLAG_OVERFLOW_VISIBLE);
-    lv_obj_set_style_text_color(brand_label, LVGL_FOREGROUND, 0);
-    lv_obj_set_style_text_align(brand_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_set_style_text_font(brand_label, &lv_font_montserrat_14, 0);
-    lv_obj_set_style_transform_angle(brand_label, 900, 0);
-    lv_obj_set_style_transform_pivot_x(brand_label, 34, 0);
-    lv_obj_set_style_transform_pivot_y(brand_label, 34, 0);
-    lv_label_set_long_mode(brand_label, LV_LABEL_LONG_CLIP);
-    lv_obj_align(brand_label, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
+    brand_src_canvas = lv_canvas_create(widget->obj);
+    lv_obj_add_flag(brand_src_canvas, LV_OBJ_FLAG_HIDDEN);
+    lv_canvas_set_buffer(brand_src_canvas, brand_src_cbuf, 68, 20, LV_IMG_CF_TRUE_COLOR);
+
+    brand_dst_canvas = lv_canvas_create(widget->obj);
+    lv_obj_set_size(brand_dst_canvas, 20, 68);
+    lv_obj_align(brand_dst_canvas, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
+    lv_canvas_set_buffer(brand_dst_canvas, brand_dst_cbuf, 20, 68, LV_IMG_CF_TRUE_COLOR);
     update_brand_label();
 
     if (logo_rotation_timer == NULL) {
