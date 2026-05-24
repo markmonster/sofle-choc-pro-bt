@@ -141,7 +141,7 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Draw one centered slot indicator at the top-row height.
     int active_slot = state->active_profile_index + 1;
     int indicator_x = 34;
-    int indicator_y = 42;
+    int indicator_y = 20;
     int pill_left = indicator_x - 17;
     int pill_top = indicator_y - 7;
     rect_white_dsc.radius = 7;
