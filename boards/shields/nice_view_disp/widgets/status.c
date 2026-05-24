@@ -80,6 +80,25 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, output_text);
 
+    lv_draw_rect_dsc_t rect_white_dsc;
+    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
+    lv_draw_label_dsc_t label_dsc_bt;
+    init_label_dsc(&label_dsc_bt, LVGL_BACKGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
+
+    // Draw the active Bluetooth slot in the top section.
+    int active_slot = state->active_profile_index + 1;
+    int indicator_x = 34;
+    int indicator_y = 20;
+    int pill_left = indicator_x - 17;
+    int pill_top = indicator_y - 7;
+    rect_white_dsc.radius = 7;
+
+    lv_canvas_draw_rect(canvas, pill_left, pill_top, 34, 14, &rect_white_dsc);
+
+    char label[8];
+    snprintf(label, sizeof(label), "BT %d", active_slot);
+    lv_canvas_draw_text(canvas, 0, pill_top + 1, CANVAS_SIZE, &label_dsc_bt, label);
+
 #if 0
     // Draw WPM
     lv_draw_label_dsc_t label_dsc_wpm;
@@ -127,30 +146,13 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
 static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 1);
+    (void)state;
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
-    lv_draw_rect_dsc_t rect_white_dsc;
-    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_BACKGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
-
-    // Draw one centered slot indicator at the top-row height.
-    int active_slot = state->active_profile_index + 1;
-    int indicator_x = 34;
-    int indicator_y = 20;
-    int pill_left = indicator_x - 17;
-    int pill_top = indicator_y - 7;
-    rect_white_dsc.radius = 7;
-
-    lv_canvas_draw_rect(canvas, pill_left, pill_top, 34, 14, &rect_white_dsc);
-
-    char label[8];
-    snprintf(label, sizeof(label), "BT %d", active_slot);
-    lv_canvas_draw_text(canvas, 0, pill_top + 1, CANVAS_SIZE, &label_dsc, label);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
@@ -317,6 +319,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_t *middle = lv_canvas_create(widget->obj);
     lv_obj_align(middle, LV_ALIGN_TOP_LEFT, middle_pos, 0);
     lv_canvas_set_buffer(middle, widget->cbuf2, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+    lv_obj_add_flag(middle, LV_OBJ_FLAG_HIDDEN);
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, bottom_pos, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
