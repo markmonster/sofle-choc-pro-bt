@@ -304,7 +304,7 @@ int middle_pos = 68;
 int bottom_pos = 136;
 #else
 int top_pos = 92;
-int middle_pos = 24;
+int middle_pos = 0;
 int bottom_pos = -44;
 #endif
 
