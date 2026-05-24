@@ -130,7 +130,7 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
     lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_BACKGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_CENTER);
+    init_label_dsc(&label_dsc, LVGL_BACKGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
@@ -139,11 +139,11 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     int active_slot = state->active_profile_index + 1;
     int indicator_x = 34;
     int indicator_y = 13;
-    int pill_left = indicator_x - 21;
-    int pill_top = indicator_y - 9;
-    rect_white_dsc.radius = 9;
+    int pill_left = indicator_x - 17;
+    int pill_top = indicator_y - 7;
+    rect_white_dsc.radius = 7;
 
-    lv_canvas_draw_rect(canvas, pill_left, pill_top, 42, 18, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas, pill_left, pill_top, 34, 14, &rect_white_dsc);
 
     char label[8];
     snprintf(label, sizeof(label), "BT %d", active_slot);
