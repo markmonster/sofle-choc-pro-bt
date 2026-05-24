@@ -88,7 +88,7 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // Draw the active Bluetooth slot in the top section.
     int active_slot = state->active_profile_index + 1;
     int indicator_x = 34;
-    int indicator_y = 20;
+    int indicator_y = 23;
     int pill_left = indicator_x - 17;
     int pill_top = indicator_y - 7;
     rect_white_dsc.radius = 7;
