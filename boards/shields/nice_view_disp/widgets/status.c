@@ -49,14 +49,8 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_RIGHT);
-    lv_draw_label_dsc_t label_dsc_wpm;
-    init_label_dsc(&label_dsc_wpm, LVGL_FOREGROUND, &lv_font_unscii_8, LV_TEXT_ALIGN_RIGHT);
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
-    lv_draw_rect_dsc_t rect_white_dsc;
-    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
-    lv_draw_line_dsc_t line_dsc;
-    init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
 
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
@@ -86,7 +80,15 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, output_text);
 
+#if 0
     // Draw WPM
+    lv_draw_label_dsc_t label_dsc_wpm;
+    init_label_dsc(&label_dsc_wpm, LVGL_FOREGROUND, &lv_font_unscii_8, LV_TEXT_ALIGN_RIGHT);
+    lv_draw_rect_dsc_t rect_white_dsc;
+    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
+    lv_draw_line_dsc_t line_dsc;
+    init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
+
     lv_canvas_draw_rect(canvas, 0, 21, 68, 42, &rect_white_dsc);
     lv_canvas_draw_rect(canvas, 1, 22, 66, 40, &rect_black_dsc);
 
@@ -117,6 +119,7 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
         points[i].y = 60 - (state->wpm[i] - min) * 36 / range;
     }
     lv_canvas_draw_line(canvas, points, 10, &line_dsc);
+#endif
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
@@ -138,7 +141,7 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Draw one centered slot indicator at the top-row height.
     int active_slot = state->active_profile_index + 1;
     int indicator_x = 34;
-    int indicator_y = 13;
+    int indicator_y = 42;
     int pill_left = indicator_x - 17;
     int pill_top = indicator_y - 7;
     rect_white_dsc.radius = 7;
