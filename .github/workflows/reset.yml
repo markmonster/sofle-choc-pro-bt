@@ -1,0 +1,9 @@
+name: Build ZMK reset firmware
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+    with:
+      build_matrix_path: reset.yaml
+      archive_name: reset-firmware-${{ github.run_number }}
