@@ -44,6 +44,25 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
+static const char *const quote_part_top =
+    "If you can't\n"
+    "change the\n"
+    "cards you are\n"
+    "dealt,";
+
+static const char *const quote_part_bottom =
+    "change how\n"
+    "you play\n"
+    "your hand.";
+
+static void draw_quote_segment(lv_obj_t *canvas, const char *text, int y) {
+    lv_draw_label_dsc_t label_dsc_quote;
+    init_label_dsc(&label_dsc_quote, LVGL_FOREGROUND, &lv_font_montserrat_10,
+                   LV_TEXT_ALIGN_CENTER);
+
+    lv_canvas_draw_text(canvas, 0, y, CANVAS_SIZE, &label_dsc_quote, text);
+}
+
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 0);
 
@@ -154,6 +173,9 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
+    // Draw the first half of the quote block.
+    draw_quote_segment(canvas, quote_part_top, 2);
+
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
 }
@@ -169,15 +191,18 @@ static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
+    // Draw the second half of the quote block.
+    draw_quote_segment(canvas, quote_part_bottom, 2);
+
     // Draw layer
     if (state->layer_label == NULL || strlen(state->layer_label) == 0) {
         char text[10] = {};
 
         sprintf(text, "LAYER %i", state->layer_index);
 
-        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
+        lv_canvas_draw_text(canvas, 0, 50, 68, &label_dsc, text);
     } else {
-        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, state->layer_label);
+        lv_canvas_draw_text(canvas, 0, 50, 68, &label_dsc, state->layer_label);
     }
 
     // Rotate canvas
@@ -319,7 +344,6 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_t *middle = lv_canvas_create(widget->obj);
     lv_obj_align(middle, LV_ALIGN_TOP_LEFT, middle_pos, 0);
     lv_canvas_set_buffer(middle, widget->cbuf2, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
-    lv_obj_add_flag(middle, LV_OBJ_FLAG_HIDDEN);
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, bottom_pos, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
