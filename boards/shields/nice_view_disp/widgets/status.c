@@ -44,23 +44,20 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
-static const char *const quote_part_top =
-    "If you can't\n"
-    "change the\n"
-    "cards you are\n"
-    "dealt,";
+static const char *const quote_text =
+    "If you can't change the cards you are dealt, change how you play your hand.";
 
-static const char *const quote_part_bottom =
-    "change how\n"
-    "you play\n"
-    "your hand.";
-
-static void draw_quote_segment(lv_obj_t *canvas, const char *text, int y) {
+static void draw_quote_overlay(lv_obj_t *canvas, lv_color_t cbuf[]) {
+    lv_draw_rect_dsc_t rect_black_dsc;
+    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_label_dsc_t label_dsc_quote;
     init_label_dsc(&label_dsc_quote, LVGL_FOREGROUND, &lv_font_montserrat_10,
                    LV_TEXT_ALIGN_CENTER);
 
-    lv_canvas_draw_text(canvas, 0, y, CANVAS_SIZE, &label_dsc_quote, text);
+    lv_canvas_draw_rect(canvas, 0, 0, QUOTE_LAYER_WIDTH, QUOTE_LAYER_HEIGHT, &rect_black_dsc);
+    lv_canvas_draw_text(canvas, 0, 7, QUOTE_LAYER_WIDTH, &label_dsc_quote, quote_text);
+
+    rotate_quote_canvas(canvas, cbuf);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -173,9 +170,6 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw the first half of the quote block.
-    draw_quote_segment(canvas, quote_part_top, 2);
-
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
 }
@@ -191,18 +185,15 @@ static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw the second half of the quote block.
-    draw_quote_segment(canvas, quote_part_bottom, 2);
-
     // Draw layer
     if (state->layer_label == NULL || strlen(state->layer_label) == 0) {
         char text[10] = {};
 
         sprintf(text, "LAYER %i", state->layer_index);
 
-        lv_canvas_draw_text(canvas, 0, 50, 68, &label_dsc, text);
+        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
     } else {
-        lv_canvas_draw_text(canvas, 0, 50, 68, &label_dsc, state->layer_label);
+        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, state->layer_label);
     }
 
     // Rotate canvas
@@ -347,6 +338,11 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, bottom_pos, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+    lv_obj_t *quote = lv_canvas_create(widget->obj);
+    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 0, 16);
+    lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_LAYER_WIDTH, QUOTE_LAYER_HEIGHT,
+                         LV_IMG_CF_TRUE_COLOR);
+    draw_quote_overlay(quote, widget->quote_cbuf);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();

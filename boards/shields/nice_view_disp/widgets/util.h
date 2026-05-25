@@ -9,6 +9,8 @@
 #include <zmk/endpoints.h>
 
 #define CANVAS_SIZE 68
+#define QUOTE_LAYER_WIDTH 160
+#define QUOTE_LAYER_HEIGHT 36
 
 #define LVGL_BACKGROUND                                                                            \
     IS_ENABLED(CONFIG_NICE_VIEW_DISP_WIDGET_INVERTED) ? lv_color_black() : lv_color_white()
@@ -39,6 +41,7 @@ struct battery_status_state {
 };
 
 void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]);
+void rotate_quote_canvas(lv_obj_t *canvas, lv_color_t cbuf[]);
 void draw_battery(lv_obj_t *canvas, const struct status_state *state);
 void init_label_dsc(lv_draw_label_dsc_t *label_dsc, lv_color_t color, const lv_font_t *font,
                     lv_text_align_t align);

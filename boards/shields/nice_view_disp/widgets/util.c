@@ -29,6 +29,25 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
 #endif
 }
 
+void rotate_quote_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
+    static lv_color_t cbuf_tmp[QUOTE_LAYER_WIDTH * QUOTE_LAYER_HEIGHT];
+    memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
+    lv_img_dsc_t img;
+    img.data = (void *)cbuf_tmp;
+    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.w = QUOTE_LAYER_WIDTH;
+    img.header.h = QUOTE_LAYER_HEIGHT;
+
+    lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+#ifdef CONFIG_NICE_VIEW_DISP_ROTATE_180
+    lv_canvas_transform(canvas, &img, -900, LV_IMG_ZOOM_NONE, -1, 0,
+                        QUOTE_LAYER_WIDTH / 2, QUOTE_LAYER_HEIGHT / 2 - 1, true);
+#else
+    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0,
+                        QUOTE_LAYER_WIDTH / 2, QUOTE_LAYER_HEIGHT / 2, true);
+#endif
+}
+
 void draw_battery(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
