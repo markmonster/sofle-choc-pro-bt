@@ -44,10 +44,12 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
-static const char *const quote_text =
-    "If you can't change the cards\n"
-    "you are dealt, change how you\n"
-    "play your hand.";
+static const char *const quote_lines[] = {
+    "If you can't change",
+    "the cards you are dealt,",
+    "change how you play",
+    "your hand.",
+};
 
 static void draw_quote_band(lv_obj_t *widget) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 3);
@@ -57,8 +59,34 @@ static void draw_quote_band(lv_obj_t *widget) {
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
-    lv_canvas_draw_rect(canvas, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_black_dsc);
-    lv_canvas_draw_text(canvas, 0, 10, QUOTE_CANVAS_WIDTH, &label_dsc, quote_text);
+    lv_canvas_draw_rect(canvas, 0, 0, QUOTE_SRC_CANVAS_WIDTH, QUOTE_SRC_CANVAS_HEIGHT,
+                        &rect_black_dsc);
+    lv_canvas_draw_text(canvas, 0, 2, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[0]);
+    lv_canvas_draw_text(canvas, 0, 17, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[1]);
+    lv_canvas_draw_text(canvas, 0, 32, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[2]);
+    lv_canvas_draw_text(canvas, 0, 47, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[3]);
+}
+
+static void rotate_quote_band(lv_obj_t *widget) {
+    lv_obj_t *canvas = lv_obj_get_child(widget, 4);
+
+    static lv_color_t cbuf_tmp[QUOTE_SRC_CANVAS_WIDTH * QUOTE_SRC_CANVAS_HEIGHT];
+    memcpy(cbuf_tmp, widget->quote_src_cbuf, sizeof(cbuf_tmp));
+
+    lv_img_dsc_t img;
+    img.data = (void *)cbuf_tmp;
+    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.w = QUOTE_SRC_CANVAS_WIDTH;
+    img.header.h = QUOTE_SRC_CANVAS_HEIGHT;
+
+    lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+#ifdef CONFIG_NICE_VIEW_DISP_ROTATE_180
+    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0, QUOTE_SRC_CANVAS_WIDTH / 2,
+                        QUOTE_SRC_CANVAS_HEIGHT / 2 - 1, true);
+#else
+    lv_canvas_transform(canvas, &img, -900, LV_IMG_ZOOM_NONE, -1, 0, QUOTE_SRC_CANVAS_WIDTH / 2,
+                        QUOTE_SRC_CANVAS_HEIGHT / 2, true);
+#endif
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -339,11 +367,16 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, bottom_pos, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+    lv_obj_t *quote_src = lv_canvas_create(widget->obj);
+    lv_obj_add_flag(quote_src, LV_OBJ_FLAG_HIDDEN);
+    lv_canvas_set_buffer(quote_src, widget->quote_src_cbuf, QUOTE_SRC_CANVAS_WIDTH,
+                         QUOTE_SRC_CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *quote = lv_canvas_create(widget->obj);
-    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 20, 0);
+    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 36, 0);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
     draw_quote_band(widget);
+    rotate_quote_band(widget);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();

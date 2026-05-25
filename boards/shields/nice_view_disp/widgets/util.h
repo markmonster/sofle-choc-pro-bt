@@ -9,8 +9,10 @@
 #include <zmk/endpoints.h>
 
 #define CANVAS_SIZE 68
-#define QUOTE_CANVAS_WIDTH 120
-#define QUOTE_CANVAS_HEIGHT 68
+#define QUOTE_SRC_CANVAS_WIDTH 120
+#define QUOTE_SRC_CANVAS_HEIGHT 68
+#define QUOTE_CANVAS_WIDTH QUOTE_SRC_CANVAS_HEIGHT
+#define QUOTE_CANVAS_HEIGHT QUOTE_SRC_CANVAS_WIDTH
 
 #define LVGL_BACKGROUND                                                                            \
     IS_ENABLED(CONFIG_NICE_VIEW_DISP_WIDGET_INVERTED) ? lv_color_black() : lv_color_white()
