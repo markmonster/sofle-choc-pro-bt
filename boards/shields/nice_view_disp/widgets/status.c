@@ -67,8 +67,8 @@ static void draw_quote_band(lv_obj_t *widget) {
     lv_canvas_draw_text(canvas, 0, 47, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[3]);
 }
 
-static void rotate_quote_band(lv_obj_t *widget) {
-    lv_obj_t *canvas = lv_obj_get_child(widget, 4);
+static void rotate_quote_band(struct zmk_widget_status *widget) {
+    lv_obj_t *canvas = lv_obj_get_child(widget->obj, 4);
 
     static lv_color_t cbuf_tmp[QUOTE_SRC_CANVAS_WIDTH * QUOTE_SRC_CANVAS_HEIGHT];
     memcpy(cbuf_tmp, widget->quote_src_cbuf, sizeof(cbuf_tmp));
