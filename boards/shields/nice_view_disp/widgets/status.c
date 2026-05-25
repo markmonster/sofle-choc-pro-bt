@@ -58,7 +58,7 @@ static void draw_quote_band(lv_obj_t *widget) {
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
     lv_canvas_draw_rect(canvas, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_black_dsc);
-    lv_canvas_draw_text(canvas, 0, 1, QUOTE_CANVAS_WIDTH, &label_dsc, quote_text);
+    lv_canvas_draw_text(canvas, 0, 10, QUOTE_CANVAS_WIDTH, &label_dsc, quote_text);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -340,7 +340,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, bottom_pos, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *quote = lv_canvas_create(widget->obj);
-    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 0, 16);
+    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 20, 0);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
     draw_quote_band(widget);
