@@ -335,7 +335,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, bottom_pos, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *quote = lv_canvas_create(widget->obj);
-    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 28, 0);
+    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 34, 0);
     lv_obj_set_size(quote, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
