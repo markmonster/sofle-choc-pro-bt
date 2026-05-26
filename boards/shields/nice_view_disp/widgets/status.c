@@ -48,9 +48,9 @@ static void draw_quote_band(lv_obj_t *widget) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 3);
 
     lv_draw_rect_dsc_t rect_black_dsc;
-    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    init_rect_dsc(&rect_black_dsc, lv_color_black());
     lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
+    init_label_dsc(&label_dsc, lv_color_white(), &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
     lv_canvas_draw_rect(canvas, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_black_dsc);
 
