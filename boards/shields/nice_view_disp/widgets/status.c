@@ -357,7 +357,7 @@ int bottom_pos = -44;
 
 int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
-    lv_obj_set_size(widget->obj, 160, 160);
+    lv_obj_set_size(widget->obj, 160, 68);
 #ifdef LV_OBJ_FLAG_OVERFLOW_VISIBLE
     lv_obj_add_flag(widget->obj, LV_OBJ_FLAG_OVERFLOW_VISIBLE);
 #endif
@@ -376,6 +376,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
                          QUOTE_SRC_CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *quote = lv_canvas_create(widget->obj);
     lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 28, 0);
+    lv_obj_set_size(quote, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
     draw_quote_band(widget);
