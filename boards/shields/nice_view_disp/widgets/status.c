@@ -44,28 +44,15 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
-static void draw_quote_band(lv_obj_t *widget) {
-    lv_obj_t *canvas = lv_obj_get_child(widget, 3);
-
-    lv_draw_rect_dsc_t rect_black_dsc;
-    init_rect_dsc(&rect_black_dsc, lv_color_white());
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, lv_color_black(), &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
-
-    lv_canvas_draw_rect(canvas, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_black_dsc);
-
-#if 0
-    // Calibration probe: enable this white rectangle when tuning the quote area.
-    lv_draw_rect_dsc_t rect_white_dsc;
-    init_rect_dsc(&rect_white_dsc, lv_color_white());
-    lv_canvas_draw_rect(canvas, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_white_dsc);
-#endif
-
-    lv_canvas_draw_text(canvas, 0, 4, QUOTE_CANVAS_WIDTH, &label_dsc, "If you can't");
-    lv_canvas_draw_text(canvas, 0, 16, QUOTE_CANVAS_WIDTH, &label_dsc, "change the cards");
-    lv_canvas_draw_text(canvas, 0, 28, QUOTE_CANVAS_WIDTH, &label_dsc, "you are dealt,");
-    lv_canvas_draw_text(canvas, 0, 40, QUOTE_CANVAS_WIDTH, &label_dsc, "change how you");
-    lv_canvas_draw_text(canvas, 0, 52, QUOTE_CANVAS_WIDTH, &label_dsc, "play your hand.");
+static void create_quote_line(lv_obj_t *parent, const char *text, lv_coord_t y) {
+    lv_obj_t *label = lv_label_create(parent);
+    lv_label_set_text(label, text);
+    lv_obj_set_width(label, QUOTE_CANVAS_WIDTH);
+    lv_obj_set_style_bg_opa(label, LV_OPA_TRANSP, LV_PART_MAIN);
+    lv_obj_set_style_text_color(label, LVGL_FOREGROUND, LV_PART_MAIN);
+    lv_obj_set_style_text_font(label, &lv_font_montserrat_10, LV_PART_MAIN);
+    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+    lv_obj_align(label, LV_ALIGN_TOP_LEFT, 34, y);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -349,12 +336,24 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, bottom_pos, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+
+#if 0
+    // Calibration probe: enable this canvas to show the quote area as a white rectangle.
     lv_obj_t *quote = lv_canvas_create(widget->obj);
     lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 34, 0);
     lv_obj_set_size(quote, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
-    draw_quote_band(widget);
+    lv_draw_rect_dsc_t rect_white_dsc;
+    init_rect_dsc(&rect_white_dsc, lv_color_white());
+    lv_canvas_draw_rect(quote, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_white_dsc);
+#endif
+
+    create_quote_line(widget->obj, "If you can't", 4);
+    create_quote_line(widget->obj, "change the cards", 16);
+    create_quote_line(widget->obj, "you are dealt,", 28);
+    create_quote_line(widget->obj, "change how you", 40);
+    create_quote_line(widget->obj, "play your hand.", 52);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
