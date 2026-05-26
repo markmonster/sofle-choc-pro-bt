@@ -56,9 +56,15 @@ static void draw_quote_band(lv_obj_t *widget) {
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
     lv_canvas_draw_rect(canvas, 0, 0, QUOTE_SRC_CANVAS_WIDTH, QUOTE_SRC_CANVAS_HEIGHT,
                         &rect_black_dsc);
+    lv_canvas_draw_text(canvas, 0, 2, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[0]);
+    lv_canvas_draw_text(canvas, 0, 17, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[1]);
+    lv_canvas_draw_text(canvas, 0, 32, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[2]);
+    lv_canvas_draw_text(canvas, 0, 47, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[3]);
 }
 
 static void rotate_quote_band(struct zmk_widget_status *widget) {
@@ -81,18 +87,6 @@ static void rotate_quote_band(struct zmk_widget_status *widget) {
     lv_canvas_transform(canvas, &img, -900, LV_IMG_ZOOM_NONE, -1, 0, QUOTE_SRC_CANVAS_WIDTH / 2,
                         QUOTE_SRC_CANVAS_HEIGHT / 2, true);
 #endif
-}
-
-static void draw_quote_text(struct zmk_widget_status *widget) {
-    lv_obj_t *canvas = lv_obj_get_child(widget->obj, 4);
-
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
-
-    lv_canvas_draw_text(canvas, 0, 8, QUOTE_CANVAS_WIDTH, &label_dsc, quote_lines[0]);
-    lv_canvas_draw_text(canvas, 0, 23, QUOTE_CANVAS_WIDTH, &label_dsc, quote_lines[1]);
-    lv_canvas_draw_text(canvas, 0, 38, QUOTE_CANVAS_WIDTH, &label_dsc, quote_lines[2]);
-    lv_canvas_draw_text(canvas, 0, 53, QUOTE_CANVAS_WIDTH, &label_dsc, quote_lines[3]);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -378,12 +372,11 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_canvas_set_buffer(quote_src, widget->quote_src_cbuf, QUOTE_SRC_CANVAS_WIDTH,
                          QUOTE_SRC_CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *quote = lv_canvas_create(widget->obj);
-    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 36, 0);
+    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 20, 0);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
     draw_quote_band(widget);
     rotate_quote_band(widget);
-    draw_quote_text(widget);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
