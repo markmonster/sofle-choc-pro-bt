@@ -372,7 +372,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_canvas_set_buffer(quote_src, widget->quote_src_cbuf, QUOTE_SRC_CANVAS_WIDTH,
                          QUOTE_SRC_CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);
     lv_obj_t *quote = lv_canvas_create(widget->obj);
-    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 20, 0);
+    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 28, 0);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
     draw_quote_band(widget);
