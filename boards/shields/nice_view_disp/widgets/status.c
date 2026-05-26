@@ -44,15 +44,49 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
-static void create_quote_line(lv_obj_t *parent, const char *text, lv_coord_t y) {
-    lv_obj_t *label = lv_label_create(parent);
-    lv_label_set_text(label, text);
-    lv_obj_set_width(label, QUOTE_CANVAS_WIDTH);
-    lv_obj_set_style_bg_opa(label, LV_OPA_TRANSP, LV_PART_MAIN);
-    lv_obj_set_style_text_color(label, LVGL_FOREGROUND, LV_PART_MAIN);
-    lv_obj_set_style_text_font(label, &lv_font_montserrat_10, LV_PART_MAIN);
-    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
-    lv_obj_align(label, LV_ALIGN_TOP_LEFT, 34, y);
+static void rotate_quote_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
+    static lv_color_t cbuf_tmp[QUOTE_SOURCE_CANVAS_WIDTH * QUOTE_SOURCE_CANVAS_HEIGHT];
+    memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
+
+    lv_img_dsc_t img;
+    img.data = (void *)cbuf_tmp;
+    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.w = QUOTE_SOURCE_CANVAS_WIDTH;
+    img.header.h = QUOTE_SOURCE_CANVAS_HEIGHT;
+
+    lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+#ifdef CONFIG_NICE_VIEW_DISP_ROTATE_180
+    lv_canvas_transform(canvas, &img, -900, LV_IMG_ZOOM_NONE, -1, 0,
+                        QUOTE_SOURCE_CANVAS_WIDTH / 2, QUOTE_SOURCE_CANVAS_HEIGHT / 2, true);
+#else
+    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0,
+                        QUOTE_SOURCE_CANVAS_WIDTH / 2, QUOTE_SOURCE_CANVAS_HEIGHT / 2, true);
+#endif
+}
+
+static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
+    lv_obj_t *source_canvas = lv_obj_get_child(widget, 4);
+    lv_obj_t *canvas = lv_obj_get_child(widget, 3);
+
+    lv_draw_rect_dsc_t rect_black_dsc;
+    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_unscii_8, LV_TEXT_ALIGN_CENTER);
+
+    lv_canvas_draw_rect(source_canvas, 0, 0, QUOTE_SOURCE_CANVAS_WIDTH, QUOTE_SOURCE_CANVAS_HEIGHT,
+                        &rect_black_dsc);
+
+    lv_canvas_draw_text(source_canvas, 0, 2, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "If you");
+    lv_canvas_draw_text(source_canvas, 0, 12, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "can't");
+    lv_canvas_draw_text(source_canvas, 0, 24, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 0, 34, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "the cards");
+    lv_canvas_draw_text(source_canvas, 0, 46, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "you are");
+    lv_canvas_draw_text(source_canvas, 0, 56, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "dealt,");
+    lv_canvas_draw_text(source_canvas, 0, 68, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "change how");
+    lv_canvas_draw_text(source_canvas, 0, 78, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "you play");
+    lv_canvas_draw_text(source_canvas, 0, 88, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "your hand.");
+
+    rotate_quote_canvas(canvas, cbuf);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -344,16 +378,19 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_set_size(quote, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT);
     lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
-    lv_draw_rect_dsc_t rect_white_dsc;
-    init_rect_dsc(&rect_white_dsc, lv_color_white());
-    lv_canvas_draw_rect(quote, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_white_dsc);
 #endif
 
-    create_quote_line(widget->obj, "If you can't", 4);
-    create_quote_line(widget->obj, "change the cards", 16);
-    create_quote_line(widget->obj, "you are dealt,", 28);
-    create_quote_line(widget->obj, "change how you", 40);
-    create_quote_line(widget->obj, "play your hand.", 52);
+    lv_obj_t *quote = lv_canvas_create(widget->obj);
+    lv_obj_align(quote, LV_ALIGN_TOP_LEFT, 34, 0);
+    lv_obj_set_size(quote, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT);
+    lv_canvas_set_buffer(quote, widget->quote_cbuf, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT,
+                         LV_IMG_CF_TRUE_COLOR);
+
+    lv_obj_t *quote_source = lv_canvas_create(widget->obj);
+    lv_obj_add_flag(quote_source, LV_OBJ_FLAG_HIDDEN);
+    lv_canvas_set_buffer(quote_source, widget->quote_src_cbuf, QUOTE_SOURCE_CANVAS_WIDTH,
+                         QUOTE_SOURCE_CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);
+    draw_quote_band(widget->obj, widget->quote_src_cbuf);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
