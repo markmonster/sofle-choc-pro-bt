@@ -47,10 +47,25 @@ struct wpm_status_state {
 static void draw_quote_band(lv_obj_t *widget) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 3);
 
+    lv_draw_rect_dsc_t rect_black_dsc;
+    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
+
+    lv_canvas_draw_rect(canvas, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_black_dsc);
+
+#if 0
+    // Calibration probe: enable this white rectangle when tuning the quote area.
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, lv_color_white());
-
     lv_canvas_draw_rect(canvas, 0, 0, QUOTE_CANVAS_WIDTH, QUOTE_CANVAS_HEIGHT, &rect_white_dsc);
+#endif
+
+    lv_canvas_draw_text(canvas, 0, 4, QUOTE_CANVAS_WIDTH, &label_dsc, "If you can't");
+    lv_canvas_draw_text(canvas, 0, 16, QUOTE_CANVAS_WIDTH, &label_dsc, "change the cards");
+    lv_canvas_draw_text(canvas, 0, 28, QUOTE_CANVAS_WIDTH, &label_dsc, "you are dealt,");
+    lv_canvas_draw_text(canvas, 0, 40, QUOTE_CANVAS_WIDTH, &label_dsc, "change how you");
+    lv_canvas_draw_text(canvas, 0, 52, QUOTE_CANVAS_WIDTH, &label_dsc, "play your hand.");
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
