@@ -357,7 +357,7 @@ int bottom_pos = -44;
 
 int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
-    lv_obj_set_size(widget->obj, 160, 68);
+    lv_obj_set_size(widget->obj, 160, 160);
 #ifdef LV_OBJ_FLAG_OVERFLOW_VISIBLE
     lv_obj_add_flag(widget->obj, LV_OBJ_FLAG_OVERFLOW_VISIBLE);
 #endif
