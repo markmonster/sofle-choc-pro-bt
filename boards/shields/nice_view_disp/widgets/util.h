@@ -9,7 +9,7 @@
 #include <zmk/endpoints.h>
 
 #define CANVAS_SIZE 68
-#define QUOTE_CANVAS_WIDTH 104
+#define QUOTE_CANVAS_WIDTH 98
 #define QUOTE_CANVAS_HEIGHT 68
 
 #define LVGL_BACKGROUND                                                                            \
