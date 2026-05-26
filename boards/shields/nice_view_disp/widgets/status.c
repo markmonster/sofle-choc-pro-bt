@@ -54,13 +54,13 @@ static const char *const quote_lines[] = {
 static void draw_quote_band(lv_obj_t *widget) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 3);
 
-    lv_draw_rect_dsc_t rect_black_dsc;
-    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    lv_draw_rect_dsc_t rect_white_dsc;
+    init_rect_dsc(&rect_white_dsc, lv_color_white());
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
     lv_canvas_draw_rect(canvas, 0, 0, QUOTE_SRC_CANVAS_WIDTH, QUOTE_SRC_CANVAS_HEIGHT,
-                        &rect_black_dsc);
+                        &rect_white_dsc);
     lv_canvas_draw_text(canvas, 0, 2, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[0]);
     lv_canvas_draw_text(canvas, 0, 17, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[1]);
     lv_canvas_draw_text(canvas, 0, 32, QUOTE_SRC_CANVAS_WIDTH, &label_dsc, quote_lines[2]);
