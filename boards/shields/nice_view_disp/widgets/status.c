@@ -70,24 +70,41 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+    lv_draw_line_dsc_t line_dsc;
+    init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_unscii_8, LV_TEXT_ALIGN_CENTER);
 
     lv_canvas_draw_rect(source_canvas, 0, 0, QUOTE_SOURCE_CANVAS_WIDTH, QUOTE_SOURCE_CANVAS_HEIGHT,
                         &rect_black_dsc);
 
-    lv_canvas_draw_text(source_canvas, 6, 1, 56, &label_dsc, "If you");
-    lv_canvas_draw_text(source_canvas, 6, 9, 56, &label_dsc, "can't");
-    lv_canvas_draw_text(source_canvas, 6, 17, 56, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 6, 25, 56, &label_dsc, "the");
-    lv_canvas_draw_text(source_canvas, 6, 33, 56, &label_dsc, "cards");
-    lv_canvas_draw_text(source_canvas, 6, 41, 56, &label_dsc, "you are");
-    lv_canvas_draw_text(source_canvas, 6, 49, 56, &label_dsc, "dealt,");
-    lv_canvas_draw_text(source_canvas, 6, 57, 56, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 6, 65, 56, &label_dsc, "how");
-    lv_canvas_draw_text(source_canvas, 6, 73, 56, &label_dsc, "you");
-    lv_canvas_draw_text(source_canvas, 6, 81, 56, &label_dsc, "play");
-    lv_canvas_draw_text(source_canvas, 2, 89, 64, &label_dsc, "your hand");
+    lv_point_t border_top[] = {{0, 0}, {QUOTE_SOURCE_CANVAS_WIDTH - 1, 0}};
+    lv_point_t border_right[] = {{QUOTE_SOURCE_CANVAS_WIDTH - 1, 0},
+                                 {QUOTE_SOURCE_CANVAS_WIDTH - 1, QUOTE_SOURCE_CANVAS_HEIGHT - 1}};
+    lv_point_t border_bottom[] = {{0, QUOTE_SOURCE_CANVAS_HEIGHT - 1},
+                                  {QUOTE_SOURCE_CANVAS_WIDTH - 1,
+                                   QUOTE_SOURCE_CANVAS_HEIGHT - 1}};
+    lv_point_t border_left[] = {{0, 0}, {0, QUOTE_SOURCE_CANVAS_HEIGHT - 1}};
+    lv_point_t center_vertical[] = {{QUOTE_SOURCE_CANVAS_WIDTH / 2, 0},
+                                    {QUOTE_SOURCE_CANVAS_WIDTH / 2,
+                                     QUOTE_SOURCE_CANVAS_HEIGHT - 1}};
+    lv_point_t center_horizontal[] = {{0, QUOTE_SOURCE_CANVAS_HEIGHT / 2},
+                                      {QUOTE_SOURCE_CANVAS_WIDTH - 1,
+                                       QUOTE_SOURCE_CANVAS_HEIGHT / 2}};
+
+    lv_canvas_draw_line(source_canvas, border_top, 2, &line_dsc);
+    lv_canvas_draw_line(source_canvas, border_right, 2, &line_dsc);
+    lv_canvas_draw_line(source_canvas, border_bottom, 2, &line_dsc);
+    lv_canvas_draw_line(source_canvas, border_left, 2, &line_dsc);
+    lv_canvas_draw_line(source_canvas, center_vertical, 2, &line_dsc);
+    lv_canvas_draw_line(source_canvas, center_horizontal, 2, &line_dsc);
+
+    lv_canvas_draw_text(source_canvas, 1, 4, 20, &label_dsc, "L");
+    lv_canvas_draw_text(source_canvas, 24, 4, 20, &label_dsc, "C");
+    lv_canvas_draw_text(source_canvas, 47, 4, 20, &label_dsc, "R");
+    lv_canvas_draw_text(source_canvas, 1, 84, 20, &label_dsc, "L");
+    lv_canvas_draw_text(source_canvas, 24, 84, 20, &label_dsc, "C");
+    lv_canvas_draw_text(source_canvas, 47, 84, 20, &label_dsc, "R");
 
     rotate_quote_canvas(canvas, cbuf);
 }
