@@ -11,7 +11,7 @@
 #define CANVAS_SIZE 68
 #define QUOTE_CANVAS_WIDTH 98
 #define QUOTE_CANVAS_HEIGHT 68
-#define QUOTE_SOURCE_CANVAS_WIDTH QUOTE_CANVAS_HEIGHT
+#define QUOTE_SOURCE_CANVAS_WIDTH QUOTE_CANVAS_WIDTH
 #define QUOTE_SOURCE_CANVAS_HEIGHT QUOTE_CANVAS_WIDTH
 
 #define LVGL_BACKGROUND                                                                            \
