@@ -102,15 +102,15 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_line(source_canvas, center_vertical, 2, &line_dsc);
     lv_canvas_draw_line(source_canvas, center_horizontal, 2, &line_dsc);
 
-    lv_canvas_draw_text(source_canvas, 0, 4, 16, &label_dsc, "A");
+    lv_canvas_draw_text(source_canvas, 8, 4, 16, &label_dsc, "A");
     lv_canvas_draw_text(source_canvas, 26, 4, 16, &label_dsc, "B");
-    lv_canvas_draw_text(source_canvas, 52, 4, 16, &label_dsc, "C");
-    lv_canvas_draw_text(source_canvas, 0, 44, 16, &label_dsc, "D");
+    lv_canvas_draw_text(source_canvas, 44, 4, 16, &label_dsc, "C");
+    lv_canvas_draw_text(source_canvas, 8, 44, 16, &label_dsc, "D");
     lv_canvas_draw_text(source_canvas, 26, 44, 16, &label_dsc, "E");
-    lv_canvas_draw_text(source_canvas, 52, 44, 16, &label_dsc, "F");
-    lv_canvas_draw_text(source_canvas, 0, 84, 16, &label_dsc, "G");
+    lv_canvas_draw_text(source_canvas, 44, 44, 16, &label_dsc, "F");
+    lv_canvas_draw_text(source_canvas, 8, 84, 16, &label_dsc, "G");
     lv_canvas_draw_text(source_canvas, 26, 84, 16, &label_dsc, "H");
-    lv_canvas_draw_text(source_canvas, 52, 84, 16, &label_dsc, "I");
+    lv_canvas_draw_text(source_canvas, 44, 84, 16, &label_dsc, "I");
 #else
     lv_canvas_draw_text(source_canvas, 0, 6, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "If you");
     lv_canvas_draw_text(source_canvas, 0, 14, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "can't");
