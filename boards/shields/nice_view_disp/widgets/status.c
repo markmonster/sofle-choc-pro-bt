@@ -70,13 +70,16 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
-    lv_draw_line_dsc_t line_dsc;
-    init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
     lv_draw_label_dsc_t label_dsc;
     init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_unscii_8, LV_TEXT_ALIGN_CENTER);
 
     lv_canvas_draw_rect(source_canvas, 0, 0, QUOTE_SOURCE_CANVAS_WIDTH, QUOTE_SOURCE_CANVAS_HEIGHT,
                         &rect_black_dsc);
+
+#if 0
+    // Diagnostic probe: enable to map the portrait quote area with border and L/C/R markers.
+    lv_draw_line_dsc_t line_dsc;
+    init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
 
     lv_point_t border_top[] = {{0, 0}, {QUOTE_SOURCE_CANVAS_WIDTH - 1, 0}};
     lv_point_t border_right[] = {{QUOTE_SOURCE_CANVAS_WIDTH - 1, 0},
@@ -105,6 +108,19 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 1, 84, 20, &label_dsc, "L");
     lv_canvas_draw_text(source_canvas, 24, 84, 20, &label_dsc, "C");
     lv_canvas_draw_text(source_canvas, 47, 84, 20, &label_dsc, "R");
+#endif
+
+    lv_canvas_draw_text(source_canvas, 0, 6, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "If you");
+    lv_canvas_draw_text(source_canvas, 0, 14, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "can't");
+    lv_canvas_draw_text(source_canvas, 0, 22, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 0, 30, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "the cards");
+    lv_canvas_draw_text(source_canvas, 0, 38, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "you are");
+    lv_canvas_draw_text(source_canvas, 0, 46, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "dealt,");
+    lv_canvas_draw_text(source_canvas, 0, 54, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 0, 62, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "how you");
+    lv_canvas_draw_text(source_canvas, 0, 70, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "play");
+    lv_canvas_draw_text(source_canvas, 0, 78, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "your");
+    lv_canvas_draw_text(source_canvas, 0, 86, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "hand.");
 
     rotate_quote_canvas(canvas, cbuf);
 }
