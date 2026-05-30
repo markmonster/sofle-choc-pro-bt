@@ -64,6 +64,23 @@ static void rotate_quote_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
 #endif
 }
 
+static void draw_quote_destination_diagnostic(lv_obj_t *canvas) {
+    lv_draw_line_dsc_t line_dsc;
+    init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
+
+    lv_point_t border_top[] = {{0, 0}, {QUOTE_CANVAS_WIDTH - 1, 0}};
+    lv_point_t border_right[] = {{QUOTE_CANVAS_WIDTH - 1, 0},
+                                 {QUOTE_CANVAS_WIDTH - 1, QUOTE_CANVAS_HEIGHT - 1}};
+    lv_point_t border_bottom[] = {{0, QUOTE_CANVAS_HEIGHT - 1},
+                                  {QUOTE_CANVAS_WIDTH - 1, QUOTE_CANVAS_HEIGHT - 1}};
+    lv_point_t border_left[] = {{0, 0}, {0, QUOTE_CANVAS_HEIGHT - 1}};
+
+    lv_canvas_draw_line(canvas, border_top, 2, &line_dsc);
+    lv_canvas_draw_line(canvas, border_right, 2, &line_dsc);
+    lv_canvas_draw_line(canvas, border_bottom, 2, &line_dsc);
+    lv_canvas_draw_line(canvas, border_left, 2, &line_dsc);
+}
+
 static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_obj_t *source_canvas = lv_obj_get_child(widget, 4);
     lv_obj_t *canvas = lv_obj_get_child(widget, 3);
@@ -131,6 +148,7 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
 #endif
 
     rotate_quote_canvas(canvas, cbuf);
+    draw_quote_destination_diagnostic(canvas);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
