@@ -59,7 +59,7 @@ static void rotate_quote_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
     lv_canvas_transform(canvas, &img, -900, LV_IMG_ZOOM_NONE, 15, -16,
                         QUOTE_SOURCE_CANVAS_WIDTH / 2, QUOTE_SOURCE_CANVAS_HEIGHT / 2, true);
 #else
-    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, 22, -15,
+    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, 22, -6,
                         QUOTE_SOURCE_CANVAS_WIDTH / 2, QUOTE_SOURCE_CANVAS_HEIGHT / 2, true);
 #endif
 }
