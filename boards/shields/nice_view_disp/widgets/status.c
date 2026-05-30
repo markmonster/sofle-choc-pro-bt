@@ -56,10 +56,10 @@ static void rotate_quote_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
 
     lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
 #ifdef CONFIG_NICE_VIEW_DISP_ROTATE_180
-    lv_canvas_transform(canvas, &img, -900, LV_IMG_ZOOM_NONE, -1, 0,
+    lv_canvas_transform(canvas, &img, -900, LV_IMG_ZOOM_NONE, 15, -16,
                         QUOTE_SOURCE_CANVAS_WIDTH / 2, QUOTE_SOURCE_CANVAS_HEIGHT / 2, true);
 #else
-    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0,
+    lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, 13, -15,
                         QUOTE_SOURCE_CANVAS_WIDTH / 2, QUOTE_SOURCE_CANVAS_HEIGHT / 2, true);
 #endif
 }
@@ -76,7 +76,7 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_rect(source_canvas, 0, 0, QUOTE_SOURCE_CANVAS_WIDTH, QUOTE_SOURCE_CANVAS_HEIGHT,
                         &rect_black_dsc);
 
-#if 0
+#if 1
     // Diagnostic probe: enable to map the portrait quote area with border and L/C/R markers.
     lv_draw_line_dsc_t line_dsc;
     init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
@@ -108,8 +108,7 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 1, 84, 20, &label_dsc, "L");
     lv_canvas_draw_text(source_canvas, 24, 84, 20, &label_dsc, "C");
     lv_canvas_draw_text(source_canvas, 47, 84, 20, &label_dsc, "R");
-#endif
-
+#else
     lv_canvas_draw_text(source_canvas, 0, 6, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "If you");
     lv_canvas_draw_text(source_canvas, 0, 14, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "can't");
     lv_canvas_draw_text(source_canvas, 0, 22, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "change");
@@ -121,6 +120,7 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 0, 70, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "play");
     lv_canvas_draw_text(source_canvas, 0, 78, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "your");
     lv_canvas_draw_text(source_canvas, 0, 86, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "hand.");
+#endif
 
     rotate_quote_canvas(canvas, cbuf);
 }
