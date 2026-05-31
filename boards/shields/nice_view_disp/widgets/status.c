@@ -138,14 +138,16 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 56, 84, 14, &label_dsc, "H");
     lv_canvas_draw_text(source_canvas, 78, 84, 14, &label_dsc, "I");
 #else
-    lv_canvas_draw_text(source_canvas, 34, 6, 58, &label_dsc, "If you can't");
-    lv_canvas_draw_text(source_canvas, 34, 17, 58, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 34, 28, 58, &label_dsc, "the cards");
-    lv_canvas_draw_text(source_canvas, 34, 39, 58, &label_dsc, "you are");
+    lv_canvas_draw_text(source_canvas, 34, 0, 58, &label_dsc, "If you");
+    lv_canvas_draw_text(source_canvas, 34, 10, 58, &label_dsc, "can't");
+    lv_canvas_draw_text(source_canvas, 34, 20, 58, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 34, 30, 58, &label_dsc, "the cards");
+    lv_canvas_draw_text(source_canvas, 34, 40, 58, &label_dsc, "you are");
     lv_canvas_draw_text(source_canvas, 34, 50, 58, &label_dsc, "dealt,");
-    lv_canvas_draw_text(source_canvas, 34, 61, 58, &label_dsc, "change how");
-    lv_canvas_draw_text(source_canvas, 34, 72, 58, &label_dsc, "you play");
-    lv_canvas_draw_text(source_canvas, 34, 83, 58, &label_dsc, "your hand.");
+    lv_canvas_draw_text(source_canvas, 34, 60, 58, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 34, 70, 58, &label_dsc, "how you");
+    lv_canvas_draw_text(source_canvas, 34, 80, 58, &label_dsc, "play your");
+    lv_canvas_draw_text(source_canvas, 34, 90, 58, &label_dsc, "hand.");
 #endif
 
     rotate_quote_canvas(canvas, cbuf);
