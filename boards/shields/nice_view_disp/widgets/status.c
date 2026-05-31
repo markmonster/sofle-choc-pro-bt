@@ -27,6 +27,41 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/wpm.h>
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
+static const uint32_t quote_rotation_period_ms = 30U * 1000U;
+
+#define QUOTE_TEXT_X 34
+#define QUOTE_TEXT_WIDTH 58
+#define QUOTE_LINE_HEIGHT 11
+
+struct quote_text {
+    const char *lines[9];
+    uint8_t line_count;
+};
+
+static const struct quote_text quote_cycle[] = {
+    {.lines = {"I am the", "creator of", "my own", "reality."}, .line_count = 4},
+    {.lines = {"Don't", "waste your", "time", "looking", "back, you", "are not", "going",
+               "that way."},
+     .line_count = 8},
+    {.lines = {"If you can't", "change", "the cards", "you are", "dealt,", "change", "how you",
+               "play your", "hand."},
+     .line_count = 9},
+    {.lines = {"If it was", "easy,", "everyone", "would do", "it."}, .line_count = 5},
+    {.lines = {"One day", "or day", "one, you", "decide."}, .line_count = 4},
+    {.lines = {"1% better", "every day."}, .line_count = 2},
+    {.lines = {"Comparison", "is the thief", "of joy."}, .line_count = 3},
+    {.lines = {"The best", "time to", "plant", "a tree was", "20 years", "ago. The",
+               "second", "best time", "is now."},
+     .line_count = 9},
+    {.lines = {"Hard", "choices,", "easy life.", "Easy", "choices,", "hard life."},
+     .line_count = 6},
+    {.lines = {"The man", "who moves", "a mountain", "begins by", "carrying", "away small",
+               "stones."},
+     .line_count = 7},
+};
+static const size_t quote_cycle_count = ARRAY_SIZE(quote_cycle);
+static size_t current_quote_index;
+static lv_timer_t *quote_rotation_timer;
 
 struct output_status_state {
     struct zmk_endpoint_instance selected_endpoint;
@@ -138,15 +173,15 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 56, 84, 14, &label_dsc, "H");
     lv_canvas_draw_text(source_canvas, 78, 84, 14, &label_dsc, "I");
 #else
-    lv_canvas_draw_text(source_canvas, 34, 0, 58, &label_dsc, "If you can't");
-    lv_canvas_draw_text(source_canvas, 34, 11, 58, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 34, 22, 58, &label_dsc, "the cards");
-    lv_canvas_draw_text(source_canvas, 34, 33, 58, &label_dsc, "you are");
-    lv_canvas_draw_text(source_canvas, 34, 44, 58, &label_dsc, "dealt,");
-    lv_canvas_draw_text(source_canvas, 34, 55, 58, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 34, 66, 58, &label_dsc, "how you");
-    lv_canvas_draw_text(source_canvas, 34, 77, 58, &label_dsc, "play your");
-    lv_canvas_draw_text(source_canvas, 34, 88, 58, &label_dsc, "hand.");
+    const struct quote_text *quote = &quote_cycle[current_quote_index];
+    const int16_t text_height = quote->line_count * QUOTE_LINE_HEIGHT;
+    const int16_t start_y =
+        text_height >= QUOTE_SOURCE_CANVAS_HEIGHT ? 0 : (QUOTE_SOURCE_CANVAS_HEIGHT - text_height) / 2;
+
+    for (uint8_t i = 0; i < quote->line_count; i++) {
+        lv_canvas_draw_text(source_canvas, QUOTE_TEXT_X, start_y + (i * QUOTE_LINE_HEIGHT),
+                            QUOTE_TEXT_WIDTH, &label_dsc, quote->lines[i]);
+    }
 #endif
 
     rotate_quote_canvas(canvas, cbuf);
@@ -290,6 +325,17 @@ static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
+}
+
+static void rotate_quote_timer_cb(lv_timer_t *timer) {
+    ARG_UNUSED(timer);
+
+    current_quote_index = (current_quote_index + 1) % quote_cycle_count;
+
+    struct zmk_widget_status *widget;
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
+        draw_quote_band(widget->obj, widget->quote_src_cbuf);
+    }
 }
 
 static void set_battery_status(struct zmk_widget_status *widget,
@@ -456,6 +502,11 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     draw_quote_band(widget->obj, widget->quote_src_cbuf);
 
     sys_slist_append(&widgets, &widget->node);
+    if (quote_rotation_timer == NULL) {
+        quote_rotation_timer =
+            lv_timer_create(rotate_quote_timer_cb, quote_rotation_period_ms, NULL);
+    }
+
     widget_battery_status_init();
     widget_output_status_init();
     widget_layer_status_init();
