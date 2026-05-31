@@ -30,7 +30,7 @@ static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 static const uint32_t quote_rotation_period_ms = 30U * 1000U;
 
 #define QUOTE_TEXT_X 34
-#define QUOTE_TEXT_WIDTH 58
+#define QUOTE_TEXT_WIDTH 64
 #define QUOTE_LINE_HEIGHT 11
 
 struct quote_text {
