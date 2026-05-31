@@ -93,7 +93,7 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_rect(source_canvas, 0, 0, QUOTE_SOURCE_CANVAS_WIDTH, QUOTE_SOURCE_CANVAS_HEIGHT,
                         &rect_black_dsc);
 
-#if 1
+#if 0
     // Diagnostic probe: enable to map the portrait quote area with border and L/C/R markers.
     lv_draw_line_dsc_t line_dsc;
     init_line_dsc(&line_dsc, LVGL_FOREGROUND, 1);
@@ -138,21 +138,19 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 56, 84, 14, &label_dsc, "H");
     lv_canvas_draw_text(source_canvas, 78, 84, 14, &label_dsc, "I");
 #else
-    lv_canvas_draw_text(source_canvas, 0, 6, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "If you");
-    lv_canvas_draw_text(source_canvas, 0, 14, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "can't");
-    lv_canvas_draw_text(source_canvas, 0, 22, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 0, 30, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "the cards");
-    lv_canvas_draw_text(source_canvas, 0, 38, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "you are");
-    lv_canvas_draw_text(source_canvas, 0, 46, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "dealt,");
-    lv_canvas_draw_text(source_canvas, 0, 54, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 0, 62, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "how you");
-    lv_canvas_draw_text(source_canvas, 0, 70, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "play");
-    lv_canvas_draw_text(source_canvas, 0, 78, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "your");
-    lv_canvas_draw_text(source_canvas, 0, 86, QUOTE_SOURCE_CANVAS_WIDTH, &label_dsc, "hand.");
+    lv_canvas_draw_text(source_canvas, 34, 4, 58, &label_dsc, "If you");
+    lv_canvas_draw_text(source_canvas, 34, 12, 58, &label_dsc, "can't");
+    lv_canvas_draw_text(source_canvas, 34, 20, 58, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 34, 28, 58, &label_dsc, "the cards");
+    lv_canvas_draw_text(source_canvas, 34, 36, 58, &label_dsc, "you are");
+    lv_canvas_draw_text(source_canvas, 34, 44, 58, &label_dsc, "dealt,");
+    lv_canvas_draw_text(source_canvas, 34, 52, 58, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 34, 60, 58, &label_dsc, "how you");
+    lv_canvas_draw_text(source_canvas, 34, 68, 58, &label_dsc, "play");
+    lv_canvas_draw_text(source_canvas, 34, 76, 58, &label_dsc, "your hand.");
 #endif
 
     rotate_quote_canvas(canvas, cbuf);
-    draw_quote_destination_diagnostic(canvas);
 }
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
