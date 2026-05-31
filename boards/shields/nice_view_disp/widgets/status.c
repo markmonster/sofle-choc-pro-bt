@@ -88,7 +88,7 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_unscii_8, LV_TEXT_ALIGN_CENTER);
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_10, LV_TEXT_ALIGN_CENTER);
 
     lv_canvas_draw_rect(source_canvas, 0, 0, QUOTE_SOURCE_CANVAS_WIDTH, QUOTE_SOURCE_CANVAS_HEIGHT,
                         &rect_black_dsc);
@@ -138,16 +138,14 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 56, 84, 14, &label_dsc, "H");
     lv_canvas_draw_text(source_canvas, 78, 84, 14, &label_dsc, "I");
 #else
-    lv_canvas_draw_text(source_canvas, 34, 4, 58, &label_dsc, "If you");
-    lv_canvas_draw_text(source_canvas, 34, 12, 58, &label_dsc, "can't");
-    lv_canvas_draw_text(source_canvas, 34, 20, 58, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 34, 6, 58, &label_dsc, "If you can't");
+    lv_canvas_draw_text(source_canvas, 34, 17, 58, &label_dsc, "change");
     lv_canvas_draw_text(source_canvas, 34, 28, 58, &label_dsc, "the cards");
-    lv_canvas_draw_text(source_canvas, 34, 36, 58, &label_dsc, "you are");
-    lv_canvas_draw_text(source_canvas, 34, 44, 58, &label_dsc, "dealt,");
-    lv_canvas_draw_text(source_canvas, 34, 52, 58, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 34, 60, 58, &label_dsc, "how you");
-    lv_canvas_draw_text(source_canvas, 34, 68, 58, &label_dsc, "play");
-    lv_canvas_draw_text(source_canvas, 34, 76, 58, &label_dsc, "your hand.");
+    lv_canvas_draw_text(source_canvas, 34, 39, 58, &label_dsc, "you are");
+    lv_canvas_draw_text(source_canvas, 34, 50, 58, &label_dsc, "dealt,");
+    lv_canvas_draw_text(source_canvas, 34, 61, 58, &label_dsc, "change how");
+    lv_canvas_draw_text(source_canvas, 34, 72, 58, &label_dsc, "you play");
+    lv_canvas_draw_text(source_canvas, 34, 83, 58, &label_dsc, "your hand.");
 #endif
 
     rotate_quote_canvas(canvas, cbuf);
