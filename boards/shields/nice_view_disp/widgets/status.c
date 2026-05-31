@@ -138,16 +138,15 @@ static void draw_quote_band(lv_obj_t *widget, lv_color_t cbuf[]) {
     lv_canvas_draw_text(source_canvas, 56, 84, 14, &label_dsc, "H");
     lv_canvas_draw_text(source_canvas, 78, 84, 14, &label_dsc, "I");
 #else
-    lv_canvas_draw_text(source_canvas, 34, 0, 58, &label_dsc, "If you");
-    lv_canvas_draw_text(source_canvas, 34, 10, 58, &label_dsc, "can't");
-    lv_canvas_draw_text(source_canvas, 34, 20, 58, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 34, 30, 58, &label_dsc, "the cards");
-    lv_canvas_draw_text(source_canvas, 34, 40, 58, &label_dsc, "you are");
-    lv_canvas_draw_text(source_canvas, 34, 50, 58, &label_dsc, "dealt,");
-    lv_canvas_draw_text(source_canvas, 34, 60, 58, &label_dsc, "change");
-    lv_canvas_draw_text(source_canvas, 34, 70, 58, &label_dsc, "how you");
-    lv_canvas_draw_text(source_canvas, 34, 80, 58, &label_dsc, "play your");
-    lv_canvas_draw_text(source_canvas, 34, 90, 58, &label_dsc, "hand.");
+    lv_canvas_draw_text(source_canvas, 34, 0, 58, &label_dsc, "If you can't");
+    lv_canvas_draw_text(source_canvas, 34, 11, 58, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 34, 22, 58, &label_dsc, "the cards");
+    lv_canvas_draw_text(source_canvas, 34, 33, 58, &label_dsc, "you are");
+    lv_canvas_draw_text(source_canvas, 34, 44, 58, &label_dsc, "dealt,");
+    lv_canvas_draw_text(source_canvas, 34, 55, 58, &label_dsc, "change");
+    lv_canvas_draw_text(source_canvas, 34, 66, 58, &label_dsc, "how you");
+    lv_canvas_draw_text(source_canvas, 34, 77, 58, &label_dsc, "play your");
+    lv_canvas_draw_text(source_canvas, 34, 88, 58, &label_dsc, "hand.");
 #endif
 
     rotate_quote_canvas(canvas, cbuf);
@@ -412,7 +411,7 @@ ZMK_SUBSCRIPTION(widget_wpm_status, zmk_wpm_state_changed);
 #ifdef CONFIG_NICE_VIEW_DISP_ROTATE_180 // sets positions for default and flipped canvases
 int top_pos = 0;
 int middle_pos = 68;
-int bottom_pos = 136;
+int bottom_pos = 140;
 #else
 int top_pos = 92;
 int middle_pos = 0;
